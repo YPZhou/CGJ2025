@@ -9,16 +9,25 @@ public enum PlayerID
 	Player2,
 }
 
+enum PlayerStatus
+{
+	Normal,
+	Aiming,
+	Holding,
+}
+
 public partial class Player : CharacterBody2D
 {
 	[Export] PlayerID PlayerID;
 	[Export] Label playerHint;
-	[Export] Sprite2D cursor;
+	[Export] Sprite2D crosshair;
 
 	public FlipFlop flipFlop;
 
 	private Furniture _faceFurniture;
 	private Furniture _holdupFurniture;
+
+	PlayerStatus status;
 
 	Vector2 moveDirection;
 	float moveSpeed = 400f;
@@ -27,9 +36,15 @@ public partial class Player : CharacterBody2D
 
 	Dictionary<PlayerID, List<Key>> keyMappings = new()
 	{
-		{ PlayerID.Player1, new List<Key> { Key.W, Key.S, Key.A, Key.D } },
-		{ PlayerID.Player2, new List<Key> { Key.Up, Key.Down, Key.Left, Key.Right } }
+		{ PlayerID.Player1, new List<Key> { Key.W, Key.S, Key.A, Key.D, Key.Space } },
+		{ PlayerID.Player2, new List<Key> { Key.Up, Key.Down, Key.Left, Key.Right, Key.Enter } }
 	};
+
+	const int upKey = 0;
+	const int downKey = 1;
+	const int leftKey = 2;
+	const int rightKey = 3;
+	const int interactKey = 4;
 
 	public override void _Ready()
 	{
@@ -42,10 +57,10 @@ public partial class Player : CharacterBody2D
 			playerHint.Text = "2P";
 		}
 
-		cursor.Visible = false;
+		crosshair.Visible = false;
 
+		status = PlayerStatus.Normal;
 		moveDirection = Vector2.Zero;
-		isAiming = false;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -64,35 +79,70 @@ public partial class Player : CharacterBody2D
 		base._Process(delta);
 
 		ProcessInput();
+
+		if (status == PlayerStatus.Aiming)
+		{
+			crosshair.Visible = true;
+		}
+		else
+		{
+			crosshair.Visible = false;
+		}
 	}
 
 	void ProcessInput()
 	{
 		var keys = keyMappings[PlayerID];
 
-		ProcessAiming(keys);
-		ProcessMove(keys);
+		switch (status)
+		{
+			case PlayerStatus.Normal:
+				if (Input.IsKeyPressed(keys[interactKey]))
+				{
+					status = PlayerStatus.Aiming;
+					moveDirection = Vector2.Zero;
+				}
+				else
+				{
+					ProcessMove(keys);
+				}
+
+				break;
+			case PlayerStatus.Aiming:
+				if (!Input.IsKeyPressed(keys[interactKey]))
+				{
+					status = PlayerStatus.Normal;
+				}
+				else
+				{
+					ProcessAiming(keys);
+				}
+
+				break;
+			case PlayerStatus.Holding:
+				break;
+		}
 	}
 
 	void ProcessMove(List<Key> keys)
 	{
 		moveDirection = Vector2.Zero;
-		if (Input.IsKeyPressed(keys[0]))
+		if (Input.IsKeyPressed(keys[upKey]))
 		{
 			moveDirection += Vector2.Up;
 		}
 
-		if (Input.IsKeyPressed(keys[1]))
+		if (Input.IsKeyPressed(keys[downKey]))
 		{
 			moveDirection += Vector2.Down;
 		}
 
-		if (Input.IsKeyPressed(keys[2]))
+		if (Input.IsKeyPressed(keys[leftKey]))
 		{
 			moveDirection += Vector2.Left;
 		}
 
-		if (Input.IsKeyPressed(keys[3]))
+		if (Input.IsKeyPressed(keys[rightKey]))
 		{
 			moveDirection += Vector2.Right;
 		}
@@ -122,6 +172,6 @@ public partial class Player : CharacterBody2D
 	public void HoldupMove()
 	{
 		// todo
-		_holdupFurniture.EmitSignal(Furniture.SignalName.Move);
+		_holdupFurniture.EmitSignal(Furniture.SignalName.HoldupMove);
 	}
 }
