@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dm7bi7u16fguy"]
+[gd_scene load_steps=4 format=3 uid="uid://dm7bi7u16fguy"]
 
 [ext_resource type="Script" uid="uid://bywt8kqaj2bgn" path="res://Script/Scene/ResultScene.cs" id="1_b1rl4"]
+[ext_resource type="Texture2D" uid="uid://hikph7fdqcaj" path="res://Image/Result.png" id="2_85ulj"]
 [ext_resource type="Texture2D" uid="uid://ctpql1owuc2xg" path="res://Image/StartGame.png" id="2_pwfvj"]
 
 [node name="Result" type="Control" node_paths=PackedStringArray("winLabel", "loseLable", "restartRect", "quitRect")]
@@ -19,6 +20,15 @@ winLabel = NodePath("VBoxContainer/WinLabel")
 loseLable = NodePath("VBoxContainer/LoseLabel")
 restartRect = NodePath("VBoxContainer/RestartRect")
 quitRect = NodePath("VBoxContainer/QuitRect")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_85ulj")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

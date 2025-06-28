@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://caj44oxse3e1"]
+[gd_scene load_steps=6 format=3 uid="uid://caj44oxse3e1"]
 
 [ext_resource type="Script" uid="uid://5fy6wnx7jql0" path="res://Script/Scene/TitleScene.cs" id="1_r8pmb"]
+[ext_resource type="Texture2D" uid="uid://cfy8h27e5hmn1" path="res://Image/Title.png" id="2_2n577"]
 [ext_resource type="Texture2D" uid="uid://ph2bw0muq4c5" path="res://icon.svg" id="2_m405t"]
 [ext_resource type="Texture2D" uid="uid://ctpql1owuc2xg" path="res://Image/StartGame.png" id="3_5ktd1"]
 
@@ -28,6 +29,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_2n577")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = 15
@@ -39,7 +51,6 @@ grow_vertical = 2
 [node name="SplashImage" type="TextureRect" parent="Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("2_m405t")
 stretch_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer"]
