@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://csjxoa7y7g1d3"]
+[gd_scene load_steps=4 format=3 uid="uid://68kwtxkojgcj"]
 
 [ext_resource type="Script" uid="uid://mdwytli87lb5" path="res://Script/GameObject/Furniture.cs" id="1_bqyfo"]
 [ext_resource type="Texture2D" uid="uid://ph2bw0muq4c5" path="res://icon.svg" id="2_skdam"]

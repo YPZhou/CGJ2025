@@ -1,47 +1,214 @@
+using CGJ2025;
 using Godot;
 using System;
+using System.Collections.Generic;
+using static Godot.SpringBoneSimulator3D;
 
-public enum Periplaneta_Status
+public enum PeriplanetaStates
 {
-	FREE,
-	POSSESS,
+	Outside,  // 家具外面
+	Entering, // 进入家具
+	Inside,   // 家具内
+	ForcedOut,// 赶出家具
+	Dead,     // 死亡
 }
 
-
-public partial class Periplaneta : Node2D
+public partial class Periplaneta : CharacterBody2D
 {
-	[Export] public Periplaneta_Status Status;
-	[Export] public float CheckRound;
-	[Export] public float CD; // todo: global cd
-	[Export] public float Speed;
+	[Export] public float AlertDistence = 7f;
+	[Export] public float DangerDistence = 3f;
+	[Export] public float CD = 5f;
+	[Export] public float BaseSpeed = 500f;
+	[Export] public float DangerSpeed = 800f;
+	[Export] public float PossessSpeed = 50f;
+	[Export] public int   MaxHealth = 15;
+	[Export] public int   MaxHit = 3;
 
-	[Signal] public delegate void KillEventHandler();
+	[Signal] public delegate void DamageEventHandler();
 
-	private float _remainCD;
+	public bool _isInFurniture = false;
+	public Player _player1;
+	public Player _player2;
+	public int currentDamage;
+	public int currentHit;
+	public float _remainCD;
+	public Furniture _possessFurniture;
+	public Furniture _targetFurniture;
+	public PeriplanetaStates _periplanetaStates;
 
-	private Furniture _possessFurniture;
+	public Vector2 moveDirection;
+
+	public override void _Ready()
+	{
+		List<Player> players = FindAllPlayers(GetTree().Root);
+
+		if (players.Count >= 2)
+		{
+			_player1 = players[0];
+			_player2 = players[1];
+			GD.Print("成功分配两个Player节点");
+		}
+		else if (players.Count == 1)
+		{
+			_player1 = players[0];
+			GD.PrintErr("警告：仅找到1个Player节点，_player2未赋值");
+		}
+		else
+		{
+			GD.PrintErr("错误：未找到任何Player节点");
+		}
+
+		currentDamage = 0;
+		currentHit = 0;
+
+		_periplanetaStates = PeriplanetaStates.Outside;
+		_isInFurniture = false;
+		_remainCD = CD;
+		
+		moveDirection = Vector2.Zero;
+	}
+	public override void _Process(double delta)
+	{
+		if (_periplanetaStates == PeriplanetaStates.Outside)
+		{
+			_remainCD -= (float)delta;
+			if (_remainCD <= 0)
+			{
+				_periplanetaStates = PeriplanetaStates.Entering;
+				_targetFurniture = FindFurnitureInScene(GetTree().Root);
+
+				return;
+			}
+
+			float distToPlayer = GlobalPosition.DistanceTo(_player1.GlobalPosition);
+			
+			if (distToPlayer < DangerDistence)
+			{
+				Vector2 fleeDir = (GlobalPosition - _player1.GlobalPosition).Normalized();
+				moveDirection = fleeDir * DangerSpeed;
+				GD.Print(Velocity);
+			}
+			else if (distToPlayer < AlertDistence)
+			{
+				if (GD.Randf() < 0.01f)
+				{
+					Vector2 wanderDir = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1).Normalized();
+					moveDirection = wanderDir * BaseSpeed;
+					GD.Print(Velocity);
+				}
+			}
+			else
+			{
+				moveDirection = Vector2.Zero;
+			}
+		}
+
+		if (_periplanetaStates == PeriplanetaStates.Entering)
+		{
+			Vector2 dir = (_targetFurniture.GlobalPosition - GlobalPosition).Normalized();
+			moveDirection = dir * BaseSpeed;
+
+			float distToFurniture = GlobalPosition.DistanceTo(_targetFurniture.GlobalPosition);
+			if (distToFurniture < 0.1f)
+			{
+				_isInFurniture = true;
+				_possessFurniture = _targetFurniture;
+				_periplanetaStates = PeriplanetaStates.Inside;
+				return;
+			}
+		}
+
+		if (_periplanetaStates == PeriplanetaStates.Inside)
+		{
+			float distToPlayer = GlobalPosition.DistanceTo(_player1.GlobalPosition);
+			// 危险/警戒距离内：携带家具远离玩家
+			if (distToPlayer < AlertDistence)
+			{
+				Vector2 moveDir = (GlobalPosition - _player1.GlobalPosition).Normalized();
+				moveDirection = moveDir * BaseSpeed;
+			}
+			// 警戒距离外：随机移动家具
+			else
+			{
+				if (GD.Randf() < 0.005f)
+					moveDirection = new Vector2(GD.Randf() * 2 - 1, 0) * BaseSpeed; // 水平移动
+			}
+		}
+
+		if (_periplanetaStates == PeriplanetaStates.Dead)
+		{
+			// todo: 蟑螂死亡
+			_ExitTree();
+		}
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (Status == Periplaneta_Status.FREE)
+		if (moveDirection != Vector2.Zero)
 		{
-			FreeMove();
-		}
-		else if (Status == Periplaneta_Status.POSSESS)
-		{
-			PossessMove();
+			Velocity = moveDirection;
+			MoveAndSlide();
 		}
 	}
 
-	public void FreeMove()
+	private Furniture FindFurnitureInScene(Node node)
 	{
-		// todo
+		// 检查当前节点是否为 Furniture
+		if (node is Furniture furnitureNode)
+			return furnitureNode;
+
+		// 递归搜索子节点
+		foreach (Node child in node.GetChildren())
+		{
+			Furniture result = FindFurnitureInScene(child);
+			if (result != null)
+				return result;
+		}
+		return null;
 	}
 
-	public void PossessMove()
+	private List<Player> FindAllPlayers(Node startNode)
 	{
-		// todo
-		_possessFurniture.EmitSignal(Furniture.SignalName.PeriMove);
+		List<Player> players = new List<Player>();
+		RecursiveSearch(startNode, players);
+		return players;
 	}
 
+	private void RecursiveSearch(Node currentNode, List<Player> playerList)
+	{
+		// 检查当前节点是否为Player
+		if (currentNode is Player player)
+		{
+			playerList.Add(player);
+			// 找到两个后提前终止搜索
+			if (playerList.Count >= 2) return;
+		}
+
+		// 递归遍历子节点
+		foreach (Node child in currentNode.GetChildren())
+		{
+			RecursiveSearch(child, playerList);
+			// 找到两个后提前终止
+			if (playerList.Count >= 2) return;
+		}
+	}
+
+
+	public void OnDamage()
+	{
+		++currentDamage;
+		++currentHit;
+		if (currentDamage >= MaxHealth)
+		{
+			_periplanetaStates = PeriplanetaStates.Dead;
+			return;
+		}
+		if (currentHit >= MaxHit)
+		{
+			_periplanetaStates = PeriplanetaStates.Outside;
+			_isInFurniture = false;
+			_remainCD = CD;
+			currentHit = 0;
+		}
+	}
 }

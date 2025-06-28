@@ -22,7 +22,7 @@ public partial class Furniture : Node2D
 	{
 		Interactive += OnInteractive;
 		Holdup += OnHoldup;
-        HoldupMove += OnMove;
+		HoldupMove += OnMove;
 		PeriMove += OnPeriMove;
 	}
 
@@ -30,7 +30,7 @@ public partial class Furniture : Node2D
 	{
 		Interactive -= OnInteractive;
 		Holdup -= OnHoldup;
-        HoldupMove -= OnMove;
+		HoldupMove -= OnMove;
 		PeriMove -= OnPeriMove;
 	}
 
@@ -56,8 +56,8 @@ public partial class Furniture : Node2D
 	}
 
 	public void OnPeriMove()
-    {
-        if (IsHoldup)
-            return;
-    }
+	{
+		if (IsHoldup)
+			return;
+	}
 }
