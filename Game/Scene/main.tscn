@@ -22,7 +22,6 @@ position = Vector2(-2536, 1406)
 position = Vector2(-1054, 277)
 
 [node name="Player2" parent="." instance=ExtResource("1_xhtwi")]
-modulate = Color(0, 0, 1, 1)
 position = Vector2(2783, 1490)
 PlayerID = 1
 

@@ -19,11 +19,15 @@ public partial class TitleScene : Node
 		{
 			case 0:
 				startRect.Scale = new Vector2(1.1f, 1.1f);
+				startLabel.Visible = true;
 				quitRect.Scale = new Vector2(1.0f, 1.0f);
+				quitLabel.Visible = false;
 				break;
 			case 1:
 				startRect.Scale = new Vector2(1.0f, 1.0f);
+				startLabel.Visible = false;
 				quitRect.Scale = new Vector2(1.1f, 1.1f);
+				quitLabel.Visible = true;
 				break;
 		}
 	}
@@ -59,5 +63,7 @@ public partial class TitleScene : Node
 	int currentSelection;
 
 	[Export] TextureRect startRect;
+	[Export] Label startLabel;
 	[Export] TextureRect quitRect;
+	[Export] Label quitLabel;
 }

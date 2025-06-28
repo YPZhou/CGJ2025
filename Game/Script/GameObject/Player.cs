@@ -77,12 +77,16 @@ public partial class Player : CharacterBody2D
 		if (PlayerID == PlayerID.Player1)
 		{
 			playerHint.Text = "1P";
+			playerHint.Modulate = Colors.Green;
 			playerSprite.Texture = player1Texture;
+			slippersCountHint.Modulate = Colors.Green;
 		}
 		else if (PlayerID == PlayerID.Player2)
 		{
 			playerHint.Text = "2P";
+			playerHint.Modulate = Colors.Blue;
 			playerSprite.Texture = player2Texture;
+			slippersCountHint.Modulate = Colors.Blue;
 		}
 
 		slippersCountHint.Text = slippersCount.ToString();
