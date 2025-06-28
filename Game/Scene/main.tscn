@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cd6r0hcwo2c65"]
+[gd_scene load_steps=5 format=3 uid="uid://c7pyu1tax5g2i"]
 
 [ext_resource type="Texture2D" uid="uid://0bp2131d24ug" path="res://Image/Floor.png" id="1_h175a"]
-[ext_resource type="PackedScene" uid="uid://blnrtn2d8p6wi" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
+[ext_resource type="PackedScene" uid="uid://dgh2j2qw7l7tp" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
 [ext_resource type="PackedScene" uid="uid://68kwtxkojgcj" path="res://Scene/GameObject/furniture.tscn" id="2_g6ejq"]
 [ext_resource type="PackedScene" uid="uid://1y6hb31hhj0x" path="res://Scene/GameObject/periplaneta.tscn" id="3_djkur"]
 
@@ -17,6 +17,8 @@ zoom = Vector2(0.2, 0.2)
 
 [node name="Player1" parent="." instance=ExtResource("1_xhtwi")]
 position = Vector2(-2536, 1406)
+player1Texture = null
+player2Texture = null
 
 [node name="Furniture" parent="." instance=ExtResource("2_g6ejq")]
 position = Vector2(-1054, 277)
@@ -25,6 +27,8 @@ position = Vector2(-1054, 277)
 modulate = Color(0, 0, 1, 1)
 position = Vector2(2783, 1490)
 PlayerID = 1
+player1Texture = null
+player2Texture = null
 
 [node name="Furniture2" parent="." instance=ExtResource("2_g6ejq")]
 position = Vector2(1553, 592)

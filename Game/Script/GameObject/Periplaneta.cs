@@ -89,14 +89,14 @@ public partial class Periplaneta : CharacterBody2D
 			float distToPlayer2 = GlobalPosition.DistanceTo(_player2.GlobalPosition);
 
 			float distToPlayer = Mathf.Min(distToPlayer1, distToPlayer2);
-            Vector2 fleeDir = (GlobalPosition - _player1.GlobalPosition).Normalized();
+			Vector2 fleeDir = (GlobalPosition - _player1.GlobalPosition).Normalized();
 
-            if (distToPlayer2 < distToPlayer1)
+			if (distToPlayer2 < distToPlayer1)
 			{
-                fleeDir = (GlobalPosition - _player2.GlobalPosition).Normalized();
-            }
+				fleeDir = (GlobalPosition - _player2.GlobalPosition).Normalized();
+			}
 
-            if (distToPlayer < DangerDistence)
+			if (distToPlayer < DangerDistence)
 			{
 				moveDirection = fleeDir * DangerSpeed;
 			}
@@ -136,16 +136,16 @@ public partial class Periplaneta : CharacterBody2D
 		if (_periplanetaStates == PeriplanetaStates.Inside)
 		{
 
-            float distToPlayer1 = GlobalPosition.DistanceTo(_player1.GlobalPosition);
-            float distToPlayer2 = GlobalPosition.DistanceTo(_player2.GlobalPosition);
+			float distToPlayer1 = GlobalPosition.DistanceTo(_player1.GlobalPosition);
+			float distToPlayer2 = GlobalPosition.DistanceTo(_player2.GlobalPosition);
 
-            float distToPlayer = Mathf.Min(distToPlayer1, distToPlayer2);
-            Vector2 moveDir = (GlobalPosition - _player1.GlobalPosition).Normalized();
+			float distToPlayer = Mathf.Min(distToPlayer1, distToPlayer2);
+			Vector2 moveDir = (GlobalPosition - _player1.GlobalPosition).Normalized();
 
-            if (distToPlayer2 < distToPlayer1)
-            {
-                moveDir = (GlobalPosition - _player2.GlobalPosition).Normalized();
-            }
+			if (distToPlayer2 < distToPlayer1)
+			{
+				moveDir = (GlobalPosition - _player2.GlobalPosition).Normalized();
+			}
 
 			// 危险距离内：携带家具远离玩家
 			if (distToPlayer < AlertDistence)
@@ -270,7 +270,6 @@ public partial class Periplaneta : CharacterBody2D
 	public void OnDamage()
 	{
 		++currentDamage;
-		++currentHit;
 		_remainCD = 0;
 
 		if (currentDamage >= MaxHealth)
@@ -280,13 +279,27 @@ public partial class Periplaneta : CharacterBody2D
 
 			return;
 		}
-		if (currentHit >= MaxHit && _periplanetaStates == PeriplanetaStates.Inside)
+
+		if (_periplanetaStates == PeriplanetaStates.Outside)
 		{
-			_periplanetaStates = PeriplanetaStates.Outside;
-			_possessFurniture.Status = Furniture_Status.FREE;
-			_isInFurniture = false;
-			_remainCD = CD;
-			currentHit = 0;
+			return;
+		}
+		if (_periplanetaStates == PeriplanetaStates.Entering)
+		{
+			return;
+		}
+		if (_periplanetaStates == PeriplanetaStates.Inside)
+		{
+			++currentHit;
+			if (currentHit >= MaxHit)
+			{
+				_periplanetaStates = PeriplanetaStates.Outside;
+				_possessFurniture.Status = Furniture_Status.FREE;
+				_isInFurniture = false;
+				moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * 100f; // todo: 从箱子被打出的位移
+				_remainCD = CD;
+				currentHit = 0;
+			}
 		}
 	}
 }
