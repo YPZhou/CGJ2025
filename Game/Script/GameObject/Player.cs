@@ -72,8 +72,13 @@ public partial class Player : CharacterBody2D
 		{
 			if (body is Furniture furniture && furniture.Status == Furniture_Status.FREE && status == PlayerStatus.Normal)
 			{
-				_faceFurniture = furniture;
-				_faceFurniture.UpdateCanHold(PlayerID, true);
+				if (_faceFurniture != furniture)
+				{
+					_faceFurniture?.UpdateCanHold(PlayerID, false);
+
+					_faceFurniture = furniture;
+					_faceFurniture.UpdateCanHold(PlayerID, true);
+				}
 			}
 		};
 
