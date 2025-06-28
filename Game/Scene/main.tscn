@@ -16,7 +16,6 @@ texture = ExtResource("1_h175a")
 zoom = Vector2(0.2, 0.2)
 
 [node name="Player1" parent="." instance=ExtResource("1_xhtwi")]
-modulate = Color(0, 1, 0, 1)
 position = Vector2(-2536, 1406)
 
 [node name="Furniture" parent="." instance=ExtResource("2_g6ejq")]

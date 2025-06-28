@@ -21,6 +21,7 @@ public partial class Player : CharacterBody2D
 	[Export] PlayerID PlayerID;
 	[Export] Label playerHint;
 	[Export] Label slippersCountHint;
+	[Export] Sprite2D playerSprite;
 	[Export] Sprite2D crosshair;
 	[Export] Sprite2D meleeFlipFlop;
 
@@ -32,6 +33,9 @@ public partial class Player : CharacterBody2D
 	[Export] AudioStreamPlayer soundPlayer;
 	[Export] AudioStream slippersHitSound;
 	[Export] AudioStream slippersFlySound;
+
+	[Export] Texture2D player1Texture;
+	[Export] Texture2D player2Texture;
 
 	private Furniture _faceFurniture;
 	private Furniture _holdupFurniture;
@@ -73,10 +77,12 @@ public partial class Player : CharacterBody2D
 		if (PlayerID == PlayerID.Player1)
 		{
 			playerHint.Text = "1P";
+			playerSprite.Texture = player1Texture;
 		}
 		else if (PlayerID == PlayerID.Player2)
 		{
 			playerHint.Text = "2P";
+			playerSprite.Texture = player2Texture;
 		}
 
 		slippersCountHint.Text = slippersCount.ToString();
