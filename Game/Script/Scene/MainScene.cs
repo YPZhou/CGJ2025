@@ -13,7 +13,7 @@ public partial class MainScene : Node
 
 	ulong gameStartTime;
 	int ElapsedSeconds => (int)((Time.GetTicksMsec() - gameStartTime) / 1000);
-	int RemainingSeconds => Mathf.Max(0, 180 - ElapsedSeconds);
+	int RemainingSeconds => Mathf.Max(0, 18 - ElapsedSeconds);
 	int RemainingMinutes => RemainingSeconds / 60;
 
 	int totalFurnitureCount;
