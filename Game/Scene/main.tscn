@@ -1,9 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://o45o73ea34jj"]
+[gd_scene load_steps=20 format=3 uid="uid://o45o73ea34jj"]
 
 [ext_resource type="Texture2D" uid="uid://0bp2131d24ug" path="res://Image/Floor.png" id="1_h175a"]
 [ext_resource type="PackedScene" uid="uid://blnrtn2d8p6wi" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
 [ext_resource type="PackedScene" uid="uid://68kwtxkojgcj" path="res://Scene/GameObject/furniture.tscn" id="2_g6ejq"]
 [ext_resource type="PackedScene" uid="uid://1y6hb31hhj0x" path="res://Scene/GameObject/periplaneta.tscn" id="3_djkur"]
+[ext_resource type="Texture2D" uid="uid://54ifojalea4u" path="res://Image/KeyW.png" id="5_hmjy8"]
+[ext_resource type="Texture2D" uid="uid://cnaadm33rwkux" path="res://Image/KeyS.png" id="6_e6irg"]
+[ext_resource type="Texture2D" uid="uid://slmdk0xl1eot" path="res://Image/KeyA.png" id="7_uq86q"]
+[ext_resource type="Texture2D" uid="uid://c22laa83n2h6k" path="res://Image/KeyD.png" id="8_aa3qu"]
+[ext_resource type="Texture2D" uid="uid://3kdojbdwk6q8" path="res://Image/KeySpace1.png" id="9_bf81u"]
+[ext_resource type="Texture2D" uid="uid://cf0ewsl80it7k" path="res://Image/KeySpace2.png" id="10_iab34"]
+[ext_resource type="Texture2D" uid="uid://cyv4gno8s1mqg" path="res://Image/KeySpace3.png" id="11_58uq4"]
+[ext_resource type="Texture2D" uid="uid://djltijk2fb67j" path="res://Image/KeyUp.png" id="12_pe27u"]
+[ext_resource type="Texture2D" uid="uid://u13it0tc1ie4" path="res://Image/KeyDown.png" id="13_ne54y"]
+[ext_resource type="Texture2D" uid="uid://b2edar8et0xvo" path="res://Image/KeyLeft.png" id="14_sssj8"]
+[ext_resource type="Texture2D" uid="uid://bmtj3qhd0xia0" path="res://Image/KeyRight.png" id="15_u2c8l"]
+[ext_resource type="Texture2D" uid="uid://k5evd7nfhpc2" path="res://Image/KeyEnter1.png" id="16_g6i1l"]
+[ext_resource type="Texture2D" uid="uid://c00vc0lc8mn3f" path="res://Image/KeyEnter2.png" id="17_reyx0"]
+[ext_resource type="Texture2D" uid="uid://du2nacbfkqcx4" path="res://Image/KeyEnter3.png" id="18_5xnk5"]
+[ext_resource type="Texture2D" uid="uid://dv8h0fix16upj" path="res://Image/KeyEnter4.png" id="19_6ngyt"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -35,3 +50,192 @@ collision_mask = 1
 AlertDistence = 1000.0
 DangerDistence = 2000.0
 MaxHealth = 15
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+offset_left = 9.0
+offset_top = 568.0
+offset_right = 167.0
+offset_bottom = 640.0
+
+[node name="KeyW" type="TextureRect" parent="CanvasLayer/Panel"]
+layout_mode = 2
+offset_left = 17.0
+offset_top = 6.0
+offset_right = 33.0
+offset_bottom = 22.0
+texture = ExtResource("5_hmjy8")
+
+[node name="KeyS" type="TextureRect" parent="CanvasLayer/Panel"]
+layout_mode = 2
+offset_left = 17.0
+offset_top = 20.0
+offset_right = 33.0
+offset_bottom = 36.0
+texture = ExtResource("6_e6irg")
+expand_mode = 2
+
+[node name="KeyA" type="TextureRect" parent="CanvasLayer/Panel"]
+layout_mode = 2
+offset_left = 4.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 36.0
+texture = ExtResource("7_uq86q")
+
+[node name="KeyD" type="TextureRect" parent="CanvasLayer/Panel"]
+layout_mode = 2
+offset_left = 31.0
+offset_top = 20.0
+offset_right = 47.0
+offset_bottom = 36.0
+texture = ExtResource("8_aa3qu")
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+offset_left = 55.0
+offset_top = 6.0
+offset_right = 119.0
+offset_bottom = 38.0
+text = "移动"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeySpace1" type="TextureRect" parent="CanvasLayer/Panel"]
+offset_left = 1.0
+offset_top = 46.0
+offset_right = 17.0
+offset_bottom = 62.0
+texture = ExtResource("9_bf81u")
+
+[node name="KeySpace2" type="TextureRect" parent="CanvasLayer/Panel"]
+offset_left = 17.0
+offset_top = 46.0
+offset_right = 33.0
+offset_bottom = 62.0
+texture = ExtResource("10_iab34")
+
+[node name="KeySpace3" type="TextureRect" parent="CanvasLayer/Panel"]
+offset_left = 33.0
+offset_top = 46.0
+offset_right = 49.0
+offset_bottom = 62.0
+texture = ExtResource("11_58uq4")
+
+[node name="Label2" type="Label" parent="CanvasLayer/Panel"]
+custom_minimum_size = Vector2(32, 16)
+offset_left = 71.0
+offset_top = 37.0
+offset_right = 153.0
+offset_bottom = 69.0
+text = "交互 | 攻击"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -50.0
+offset_right = 46.0
+offset_bottom = 5.0
+theme_override_font_sizes/font_size = 40
+text = "1P"
+
+[node name="Panel2" type="Panel" parent="CanvasLayer"]
+offset_left = 986.0
+offset_top = 558.0
+offset_right = 1144.0
+offset_bottom = 640.0
+
+[node name="KeyUp" type="TextureRect" parent="CanvasLayer/Panel2"]
+layout_mode = 2
+offset_left = 17.0
+offset_top = 6.0
+offset_right = 33.0
+offset_bottom = 22.0
+texture = ExtResource("12_pe27u")
+
+[node name="KeyDown" type="TextureRect" parent="CanvasLayer/Panel2"]
+layout_mode = 2
+offset_left = 17.0
+offset_top = 20.0
+offset_right = 33.0
+offset_bottom = 36.0
+texture = ExtResource("13_ne54y")
+expand_mode = 2
+
+[node name="KeyLeft" type="TextureRect" parent="CanvasLayer/Panel2"]
+layout_mode = 2
+offset_left = 4.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 36.0
+texture = ExtResource("14_sssj8")
+
+[node name="KeyRight" type="TextureRect" parent="CanvasLayer/Panel2"]
+layout_mode = 2
+offset_left = 31.0
+offset_top = 20.0
+offset_right = 47.0
+offset_bottom = 36.0
+texture = ExtResource("15_u2c8l")
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel2"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+offset_left = 55.0
+offset_top = 6.0
+offset_right = 119.0
+offset_bottom = 38.0
+text = "移动"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyEnter1" type="TextureRect" parent="CanvasLayer/Panel2"]
+offset_left = 7.0
+offset_top = 41.0
+offset_right = 23.0
+offset_bottom = 57.0
+texture = ExtResource("16_g6i1l")
+
+[node name="KeyEnter2" type="TextureRect" parent="CanvasLayer/Panel2"]
+offset_left = 23.0
+offset_top = 41.0
+offset_right = 39.0
+offset_bottom = 57.0
+texture = ExtResource("17_reyx0")
+
+[node name="KeyEnter3" type="TextureRect" parent="CanvasLayer/Panel2"]
+offset_left = 7.0
+offset_top = 57.0
+offset_right = 23.0
+offset_bottom = 73.0
+texture = ExtResource("18_5xnk5")
+
+[node name="KeyEnter4" type="TextureRect" parent="CanvasLayer/Panel2"]
+offset_left = 23.0
+offset_top = 57.0
+offset_right = 39.0
+offset_bottom = 73.0
+texture = ExtResource("19_6ngyt")
+
+[node name="Label2" type="Label" parent="CanvasLayer/Panel2"]
+custom_minimum_size = Vector2(32, 16)
+offset_left = 71.0
+offset_top = 40.0
+offset_right = 153.0
+offset_bottom = 72.0
+text = "交互 | 攻击"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer/Panel2"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = -50.0
+offset_right = 155.0
+offset_bottom = 5.0
+theme_override_font_sizes/font_size = 40
+text = "2P"
