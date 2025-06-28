@@ -58,6 +58,7 @@ public partial class ResultScene : Control
 				if (currentSelection == 0)
 				{
 					Furniture.FurnitureCount = 0;
+					Periplaneta.PeriplanetaCount = 0;
 					MainScene.IsGameWin = false;
 
 					GetTree().ChangeSceneToFile("res://Scene/Main.tscn");

@@ -1,6 +1,4 @@
-using CGJ2025;
 using Godot;
-using System;
 using System.Collections.Generic;
 
 namespace CGJ2025;
@@ -39,6 +37,8 @@ public partial class Periplaneta : CharacterBody2D
 
 	public Vector2 moveDirection;
 
+	public static int PeriplanetaCount;
+
 	public override void _Ready()
 	{
 		List<Player> players = FindAllPlayers(GetTree().Root);
@@ -67,6 +67,8 @@ public partial class Periplaneta : CharacterBody2D
 		_remainCD = CD;
 		
 		moveDirection = Vector2.Zero;
+
+		PeriplanetaCount += 1;
 
 	}
 	public override void _Process(double delta)
@@ -289,6 +291,8 @@ public partial class Periplaneta : CharacterBody2D
 		if (currentDamage >= MaxHealth)
 		{
 			_periplanetaStates = PeriplanetaStates.Dead;
+			PeriplanetaCount -= 1;
+
 			if (_possessFurniture != null)
 				_possessFurniture.Status = Furniture_Status.FREE;
 			_isInFurniture = false;

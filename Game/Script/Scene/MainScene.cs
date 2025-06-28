@@ -66,7 +66,8 @@ public partial class MainScene : Node
 
 		if (RemainingSeconds > 0)
 		{
-			if (totalFurnitureCount - furnitureInTargetAreaCount == 0)
+			if (totalFurnitureCount - furnitureInTargetAreaCount == 0
+				|| Periplaneta.PeriplanetaCount == 0)
 			{
 				IsGameWin = true;
 				GetTree().ChangeSceneToFile("res://Scene/Result.tscn");
