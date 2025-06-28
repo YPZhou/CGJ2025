@@ -17,10 +17,11 @@ radius = 104.307
 [sub_resource type="CircleShape2D" id="CircleShape2D_3kjfs"]
 radius = 150.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("playerHint", "slippersCountHint", "crosshair", "meleeFlipFlop", "furniturePicking", "meleeAttackRange", "soundPlayer")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("playerHint", "slippersCountHint", "playerSprite", "crosshair", "meleeFlipFlop", "furniturePicking", "meleeAttackRange", "soundPlayer")]
 script = ExtResource("1_006tn")
 playerHint = NodePath("PlayerHint")
 slippersCountHint = NodePath("SlippersCount")
+playerSprite = NodePath("PlayerSprite")
 crosshair = NodePath("CrosshairSprite")
 meleeFlipFlop = NodePath("FlipFlopSprite")
 furniturePicking = NodePath("FurniturePickingArea")
