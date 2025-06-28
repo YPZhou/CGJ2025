@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://mnkax4hxm58q"]
+
+[ext_resource type="Texture2D" uid="uid://ph2bw0muq4c5" path="res://icon.svg" id="1_f103b"]
+[ext_resource type="Script" uid="uid://cahqtpvbnh1l7" path="res://Script/GameObject/Weapon/Slippers.cs" id="1_x4rru"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xskj4"]
+radius = 70.6116
+
+[node name="Slippers" type="CharacterBody2D"]
+script = ExtResource("1_x4rru")
+
+[node name="SlippersSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_f103b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xskj4")

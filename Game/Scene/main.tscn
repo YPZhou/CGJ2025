@@ -18,3 +18,6 @@ Status = 0
 modulate = Color(0, 0, 1, 1)
 position = Vector2(881, 446)
 PlayerID = 1
+
+[node name="Furniture2" parent="." instance=ExtResource("2_g6ejq")]
+position = Vector2(746, 192)

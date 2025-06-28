@@ -6,13 +6,25 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bqyfo"]
 size = Vector2(123, 124)
 
-[node name="Furniture" type="StaticBody2D"]
+[node name="Furniture" type="StaticBody2D" node_paths=PackedStringArray("holdHint", "collisionShape")]
 script = ExtResource("1_bqyfo")
+holdHint = NodePath("HoldHint")
+collisionShape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -1)
 shape = SubResource("RectangleShape2D_bqyfo")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="FurnitureSprite" type="Sprite2D" parent="."]
 self_modulate = Color(1, 0.607843, 0.188235, 1)
 texture = ExtResource("2_skdam")
+
+[node name="HoldHint" type="Label" parent="."]
+offset_left = -40.0
+offset_top = -125.0
+offset_right = 40.0
+offset_bottom = -70.0
+theme_override_font_sizes/font_size = 40
+text = "搬运"
+horizontal_alignment = 1
+vertical_alignment = 1

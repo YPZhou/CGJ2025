@@ -2,7 +2,8 @@ using CGJ2025;
 using Godot;
 using System;
 using System.Collections.Generic;
-using static Godot.SpringBoneSimulator3D;
+
+namespace CGJ2025;
 
 public enum PeriplanetaStates
 {

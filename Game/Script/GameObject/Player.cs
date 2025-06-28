@@ -21,19 +21,35 @@ public partial class Player : CharacterBody2D
 	[Export] PlayerID PlayerID;
 	[Export] Label playerHint;
 	[Export] Sprite2D crosshair;
+	[Export] Sprite2D meleeFlipFlop;
 
-	public FlipFlop flipFlop;
+	[Export] Area2D furniturePicking;
+	[Export] Area2D meleeAttackRange;
+
+	[Export] PackedScene slippersScene;
 
 	private Furniture _faceFurniture;
 	private Furniture _holdupFurniture;
 
 	PlayerStatus status;
 
+	int slippersCount;
+
 	Vector2 moveDirection;
 	float moveSpeed = 400f;
 
 	Vector2 crosshairPosition;
 	float crosshairAngle = 0f;
+
+	float aimingStartTime;
+	float AimingTime => Time.GetTicksMsec() - aimingStartTime;
+	float aimingThreshold = 100f;
+
+	float meleeAttackStartTime;
+	float MeleeAttackTime => Time.GetTicksMsec() - meleeAttackStartTime;
+	float meleeAttackDuration = 200f;
+
+	Tween meleeAttackTween;
 
 	Dictionary<PlayerID, List<Key>> keyMappings = new()
 	{
@@ -60,7 +76,48 @@ public partial class Player : CharacterBody2D
 
 		crosshair.Visible = false;
 		crosshairPosition = new Vector2(0, -200f);
+		aimingStartTime = 0f;
 
+		meleeFlipFlop.Visible = false;
+
+		furniturePicking.BodyEntered += (body) =>
+		{
+			if (body is Furniture furniture && furniture.Status == Furniture_Status.FREE && status == PlayerStatus.Normal)
+			{
+				if (_faceFurniture != furniture)
+				{
+					_faceFurniture?.UpdateCanHold(PlayerID, false);
+
+					_faceFurniture = furniture;
+					_faceFurniture.UpdateCanHold(PlayerID, true);
+				}
+			}
+		};
+
+		furniturePicking.BodyExited += (body) =>
+		{
+			if (body is Furniture furniture)
+			{
+				if (_faceFurniture == furniture)
+				{
+					_faceFurniture.UpdateCanHold(PlayerID, false);
+					_faceFurniture = null;
+				}
+			}
+		};
+
+		meleeAttackRange.Monitoring = false;
+		meleeAttackRange.Monitorable = false;
+
+		meleeAttackRange.BodyEntered += (body) =>
+		{
+			if (body is Periplaneta periplaneta)
+			{
+				GD.Print(Name, "命中", periplaneta.Name);
+			}
+		};
+
+		slippersCount = 1;
 		status = PlayerStatus.Normal;
 		moveDirection = Vector2.Zero;
 	}
@@ -82,7 +139,7 @@ public partial class Player : CharacterBody2D
 
 		ProcessInput();
 
-		if (status == PlayerStatus.Aiming)
+		if (status == PlayerStatus.Aiming && AimingTime >= aimingThreshold)
 		{
 			crosshair.Visible = true;
 			crosshair.Position = crosshairPosition;
@@ -91,6 +148,14 @@ public partial class Player : CharacterBody2D
 		{
 			crosshair.Visible = false;
 			crosshair.Position = Vector2.Zero;
+		}
+
+		if (MeleeAttackTime >= meleeAttackDuration)
+		{
+			meleeAttackRange.Monitoring = false;
+			meleeFlipFlop.Visible = false;
+			meleeFlipFlop.Modulate = new Color(meleeFlipFlop.Modulate, 0f);
+			meleeAttackTween?.Kill();
 		}
 	}
 
@@ -103,8 +168,23 @@ public partial class Player : CharacterBody2D
 			case PlayerStatus.Normal:
 				if (Input.IsKeyPressed(keys[interactKey]))
 				{
-					status = PlayerStatus.Aiming;
-					moveDirection = Vector2.Zero;
+					if (_faceFurniture != null)
+					{
+						_holdupFurniture = _faceFurniture;
+						_faceFurniture = null;
+
+						_holdupFurniture.OnHoldup();
+						_holdupFurniture.UpdateCanHold(PlayerID, false);
+						status = PlayerStatus.Holding;
+
+						GD.Print(Name, "搬运", _holdupFurniture);
+					}
+					else
+					{
+						aimingStartTime = Time.GetTicksMsec();
+						status = PlayerStatus.Aiming;
+						moveDirection = Vector2.Zero;
+					}
 				}
 				else
 				{
@@ -115,6 +195,29 @@ public partial class Player : CharacterBody2D
 			case PlayerStatus.Aiming:
 				if (!Input.IsKeyPressed(keys[interactKey]))
 				{
+					if (AimingTime >= aimingThreshold && slippersCount > 0)
+					{
+						slippersCount -= 1;
+						var slippers = slippersScene.Instantiate<Slippers>();
+						GetTree().CurrentScene.AddChild(slippers);
+
+						GD.Print(Name, "投掷", slippers.Name);
+					}
+					else
+					{
+						if (!meleeAttackRange.Monitoring)
+						{
+							meleeAttackRange.Monitoring = true;
+							meleeAttackStartTime = Time.GetTicksMsec();
+
+							meleeFlipFlop.Visible = true;
+							meleeAttackTween = CreateTween();
+							meleeAttackTween.TweenProperty(meleeFlipFlop, "modulate:a", 255f, meleeAttackDuration);
+
+							GD.Print(Name, "挥舞拖鞋");
+						}
+					}
+
 					status = PlayerStatus.Normal;
 				}
 				else
@@ -124,6 +227,22 @@ public partial class Player : CharacterBody2D
 
 				break;
 			case PlayerStatus.Holding:
+				if (!Input.IsKeyPressed(keys[interactKey]))
+				{
+					GD.Print(Name, "放下", _holdupFurniture);
+
+					_holdupFurniture.OnPutdown();
+					_holdupFurniture.UpdateCanHold(PlayerID, true);
+					_faceFurniture = _holdupFurniture;
+					_holdupFurniture = null;
+					status = PlayerStatus.Normal;
+				}
+				else
+				{
+					ProcessMove(keys);
+					_holdupFurniture.Position = Position + new Vector2(0, -100f);
+				}
+
 				break;
 		}
 	}
@@ -215,16 +334,5 @@ public partial class Player : CharacterBody2D
 	public void Holdup()
 	{
 		_faceFurniture.EmitSignal(Furniture.SignalName.Holdup);
-	}
-
-	public void FreeMove()
-	{
-		// todo
-	}
-
-	public void HoldupMove()
-	{
-		// todo
-		_holdupFurniture.EmitSignal(Furniture.SignalName.HoldupMove);
 	}
 }
