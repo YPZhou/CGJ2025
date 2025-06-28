@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://blnrtn2d8p6wi"]
+[gd_scene load_steps=11 format=3 uid="uid://d32cfx4uh1ep8"]
 
 [ext_resource type="Script" uid="uid://cmg88brs637f8" path="res://Script/GameObject/Player.cs" id="1_006tn"]
 [ext_resource type="PackedScene" uid="uid://mnkax4hxm58q" path="res://Scene/GameObject/Weapon/Slippers.tscn" id="2_3kjfs"]

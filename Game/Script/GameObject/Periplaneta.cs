@@ -163,10 +163,16 @@ public partial class Periplaneta : CharacterBody2D
 
 		if (_periplanetaStates == PeriplanetaStates.Dead)
 		{
+			if (isDead) return;
+			
+			isDead = true;
 			// todo: 蟑螂死亡
-			_ExitTree();
+			SceneTreeTimer timer = GetTree().CreateTimer(1.0f);
+			timer.Timeout += () => QueueFree();
+
 		}
 	}
+	private bool isDead = false;
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -276,7 +282,10 @@ public partial class Periplaneta : CharacterBody2D
 		{
 			_periplanetaStates = PeriplanetaStates.Dead;
 			_possessFurniture.Status = Furniture_Status.FREE;
+			_isInFurniture = false;
+			moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * 3f; // todo: 从箱子被打出的位移
 
+			MoveAndSlide();
 			return;
 		}
 
@@ -291,12 +300,14 @@ public partial class Periplaneta : CharacterBody2D
 		if (_periplanetaStates == PeriplanetaStates.Inside)
 		{
 			++currentHit;
+			GD.Print(currentHit);
+			GD.Print(currentDamage);
 			if (currentHit >= MaxHit)
 			{
 				_periplanetaStates = PeriplanetaStates.Outside;
 				_possessFurniture.Status = Furniture_Status.FREE;
 				_isInFurniture = false;
-				moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * 100f; // todo: 从箱子被打出的位移
+				moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * 3f; // todo: 从箱子被打出的位移
 				_remainCD = CD;
 				currentHit = 0;
 			}

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://o45o73ea34jj"]
 
 [ext_resource type="Texture2D" uid="uid://0bp2131d24ug" path="res://Image/Floor.png" id="1_h175a"]
-[ext_resource type="PackedScene" uid="uid://dgh2j2qw7l7tp" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
+[ext_resource type="PackedScene" uid="uid://d32cfx4uh1ep8" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
 [ext_resource type="PackedScene" uid="uid://68kwtxkojgcj" path="res://Scene/GameObject/furniture.tscn" id="2_g6ejq"]
 [ext_resource type="PackedScene" uid="uid://1y6hb31hhj0x" path="res://Scene/GameObject/periplaneta.tscn" id="3_djkur"]
 
@@ -34,8 +34,13 @@ position = Vector2(1553, 592)
 
 [node name="Periplaneta" parent="." instance=ExtResource("3_djkur")]
 position = Vector2(524, 123)
-collision_layer = 1
-collision_mask = 1
 AlertDistence = 1000.0
 DangerDistence = 2000.0
 MaxHealth = 15
+
+[node name="Periplaneta2" parent="." instance=ExtResource("3_djkur")]
+position = Vector2(-1777, -106)
+AlertDistence = 1000.0
+DangerDistence = 2000.0
+CD = 2.0
+MaxHealth = 4
