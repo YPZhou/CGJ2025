@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvwuh3rtrgone"]
+
+[ext_resource type="PackedScene" uid="uid://cwjv7iv62x21g" path="res://Scene/GameObject/Player.tscn" id="1_mypys"]
+[ext_resource type="PackedScene" uid="uid://1y6hb31hhj0x" path="res://Scene/GameObject/periplaneta.tscn" id="2_3wv3v"]
+[ext_resource type="PackedScene" uid="uid://68kwtxkojgcj" path="res://Scene/GameObject/furniture.tscn" id="3_3wv3v"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_mypys")]
+position = Vector2(-357, -153)
+
+[node name="Periplaneta" parent="." instance=ExtResource("2_3wv3v")]
+position = Vector2(257, -43)
+DangerDistence = 500.0
+
+[node name="Player2" parent="." instance=ExtResource("1_mypys")]
+position = Vector2(-108, 305)
+PlayerID = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.2, 0.2)
+
+[node name="Furniture" parent="." instance=ExtResource("3_3wv3v")]
+position = Vector2(97, -409)
