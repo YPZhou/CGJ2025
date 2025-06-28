@@ -7,8 +7,8 @@
 radius = 62.0081
 
 [node name="Periplaneta" type="CharacterBody2D"]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 32
+collision_mask = 16
 script = ExtResource("1_ygplf")
 MaxHealth = 2
 
@@ -17,4 +17,3 @@ texture = ExtResource("2_ygplf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ygplf")
-disabled = true

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dvwuh3rtrgone"]
 
-[ext_resource type="PackedScene" uid="uid://blnrtn2d8p6wi" path="res://Scene/GameObject/Player.tscn" id="1_mypys"]
+[ext_resource type="PackedScene" uid="uid://d32cfx4uh1ep8" path="res://Scene/GameObject/Player.tscn" id="1_mypys"]
 [ext_resource type="PackedScene" uid="uid://1y6hb31hhj0x" path="res://Scene/GameObject/periplaneta.tscn" id="2_3wv3v"]
 [ext_resource type="PackedScene" uid="uid://68kwtxkojgcj" path="res://Scene/GameObject/furniture.tscn" id="3_3wv3v"]
 
