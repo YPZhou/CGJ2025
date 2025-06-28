@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d32cfx4uh1ep8"]
+[gd_scene load_steps=12 format=3 uid="uid://d32cfx4uh1ep8"]
 
 [ext_resource type="Script" uid="uid://cmg88brs637f8" path="res://Script/GameObject/Player.cs" id="1_006tn"]
 [ext_resource type="PackedScene" uid="uid://mnkax4hxm58q" path="res://Scene/GameObject/Weapon/Slippers.tscn" id="2_3kjfs"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://bm0w7ploqoqvp" path="res://Sound/SlippersFly.mp3" id="4_tse35"]
 [ext_resource type="Texture2D" uid="uid://c7vv243kbuywm" path="res://Image/Player1.png" id="5_74w6k"]
 [ext_resource type="Texture2D" uid="uid://bcvcaq6oeeb7v" path="res://Image/Player2.png" id="6_05egk"]
+[ext_resource type="Texture2D" uid="uid://2l6xfuqq7n4p" path="res://Image/Slippers.png" id="8_gl3sy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_006tn"]
 radius = 66.0076
@@ -43,9 +44,8 @@ scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_78ywy")
 
 [node name="FlipFlopSprite" type="Sprite2D" parent="."]
-self_modulate = Color(1, 0, 0, 1)
-scale = Vector2(2, 2)
-texture = ExtResource("2_78ywy")
+scale = Vector2(3, 3)
+texture = ExtResource("8_gl3sy")
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_006tn")

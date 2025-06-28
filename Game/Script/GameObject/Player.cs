@@ -58,8 +58,6 @@ public partial class Player : CharacterBody2D
 	float MeleeAttackTime => Time.GetTicksMsec() - meleeAttackStartTime;
 	float meleeAttackDuration = 200f;
 
-	Tween meleeAttackTween;
-
 	Dictionary<PlayerID, List<Key>> keyMappings = new()
 	{
 		{ PlayerID.Player1, new List<Key> { Key.W, Key.S, Key.A, Key.D, Key.Space } },
@@ -179,8 +177,10 @@ public partial class Player : CharacterBody2D
 		{
 			meleeAttackRange.Monitoring = false;
 			meleeFlipFlop.Visible = false;
-			meleeFlipFlop.Modulate = new Color(meleeFlipFlop.Modulate, 0f);
-			meleeAttackTween?.Kill();
+		}
+		else
+		{
+			meleeFlipFlop.RotationDegrees += 2;
 		}
 	}
 
@@ -245,8 +245,6 @@ public partial class Player : CharacterBody2D
 								meleeAttackStartTime = Time.GetTicksMsec();
 
 								meleeFlipFlop.Visible = true;
-								meleeAttackTween = CreateTween();
-								meleeAttackTween.TweenProperty(meleeFlipFlop, "modulate:a", 255f, meleeAttackDuration);
 
 								soundPlayer.Stream = slippersHitSound;
 								soundPlayer.Play();
