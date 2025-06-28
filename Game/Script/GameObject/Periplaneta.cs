@@ -124,11 +124,19 @@ public partial class Periplaneta : CharacterBody2D
 			float distToFurniture = GlobalPosition.DistanceTo(_targetFurniture.GlobalPosition);
 			if (distToFurniture < 5f)
 			{
-				_isInFurniture = true;
-				_possessFurniture = _targetFurniture;
-				_possessFurniture.Status = Furniture_Status.POSSESS;
-				_periplanetaStates = PeriplanetaStates.Inside;
-				return;
+				if (_targetFurniture.Status == Furniture_Status.FREE)
+				{
+					_isInFurniture = true;
+					_possessFurniture = _targetFurniture;
+					_possessFurniture.Status = Furniture_Status.POSSESS;
+					_periplanetaStates = PeriplanetaStates.Inside;
+					return;
+				}
+				else
+				{
+					_periplanetaStates = PeriplanetaStates.ForcedOut;
+					return;
+				}
 			}
 			return;
 		}
