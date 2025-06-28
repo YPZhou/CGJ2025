@@ -34,7 +34,7 @@ self_modulate = Color(1, 0, 0, 1)
 scale = Vector2(2, 2)
 texture = ExtResource("2_78ywy")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_006tn")
 
 [node name="PlayerHint" type="Label" parent="."]
@@ -49,10 +49,10 @@ vertical_alignment = 1
 
 [node name="FurniturePickingArea" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FurniturePickingArea"]
+[node name="FurniturePickingCollisionShape" type="CollisionShape2D" parent="FurniturePickingArea"]
 shape = SubResource("CircleShape2D_78ywy")
 
 [node name="MeleeAttackArea" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeAttackArea"]
+[node name="MeleeAttackCollisionShape" type="CollisionShape2D" parent="MeleeAttackArea"]
 shape = SubResource("CircleShape2D_3kjfs")
