@@ -23,6 +23,8 @@ public partial class Player : CharacterBody2D
 	Vector2 moveDirection;
 	float moveSpeed = 400f;
 
+	bool isAiming;
+
 	Dictionary<PlayerID, List<Key>> keyMappings = new()
 	{
 		{ PlayerID.Player1, new List<Key> { Key.W, Key.S, Key.A, Key.D } },
@@ -31,9 +33,6 @@ public partial class Player : CharacterBody2D
 
 	public override void _Ready()
 	{
-		moveDirection = Vector2.Zero;
-		cursor.Visible = false;
-
 		if (PlayerID == PlayerID.Player1)
 		{
 			playerHint.Text = "1P";
@@ -42,6 +41,11 @@ public partial class Player : CharacterBody2D
 		{
 			playerHint.Text = "2P";
 		}
+
+		cursor.Visible = false;
+
+		moveDirection = Vector2.Zero;
+		isAiming = false;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -65,6 +69,8 @@ public partial class Player : CharacterBody2D
 	void ProcessInput()
 	{
 		var keys = keyMappings[PlayerID];
+
+		ProcessAiming(keys);
 		ProcessMove(keys);
 	}
 
@@ -92,6 +98,10 @@ public partial class Player : CharacterBody2D
 		}
 
 		moveDirection = moveDirection.Normalized() * moveSpeed;
+	}
+
+	void ProcessAiming(List<Key> keys)
+	{
 	}
 
 	public void Interactive()
