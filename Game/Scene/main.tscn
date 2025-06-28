@@ -1,5 +1,6 @@
-[gd_scene load_steps=20 format=3 uid="uid://b2eymyik6mo3o"]
+[gd_scene load_steps=21 format=3 uid="uid://b2eymyik6mo3o"]
 
+[ext_resource type="Script" uid="uid://cbbasc4iewoef" path="res://Script/Scene/MainScene.cs" id="1_e6irg"]
 [ext_resource type="Texture2D" uid="uid://0bp2131d24ug" path="res://Image/Floor.png" id="1_h175a"]
 [ext_resource type="PackedScene" uid="uid://d32cfx4uh1ep8" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
 [ext_resource type="PackedScene" uid="uid://68kwtxkojgcj" path="res://Scene/GameObject/furniture.tscn" id="2_g6ejq"]
@@ -20,7 +21,9 @@
 [ext_resource type="Texture2D" uid="uid://du2nacbfkqcx4" path="res://Image/KeyEnter3.png" id="18_5xnk5"]
 [ext_resource type="Texture2D" uid="uid://dv8h0fix16upj" path="res://Image/KeyEnter4.png" id="19_6ngyt"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("remainingTimeLabel")]
+script = ExtResource("1_e6irg")
+remainingTimeLabel = NodePath("CanvasLayer/RemainingTime/Label")
 
 [node name="Floor" type="Sprite2D" parent="."]
 rotation = 1.5708
@@ -62,13 +65,13 @@ MaxHealth = 4
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Panel" type="Panel" parent="CanvasLayer"]
+[node name="1PControlHint" type="Panel" parent="CanvasLayer"]
 offset_left = 9.0
 offset_top = 568.0
 offset_right = 167.0
 offset_bottom = 640.0
 
-[node name="KeyW" type="TextureRect" parent="CanvasLayer/Panel"]
+[node name="KeyW" type="TextureRect" parent="CanvasLayer/1PControlHint"]
 layout_mode = 2
 offset_left = 17.0
 offset_top = 6.0
@@ -76,7 +79,7 @@ offset_right = 33.0
 offset_bottom = 22.0
 texture = ExtResource("5_hmjy8")
 
-[node name="KeyS" type="TextureRect" parent="CanvasLayer/Panel"]
+[node name="KeyS" type="TextureRect" parent="CanvasLayer/1PControlHint"]
 layout_mode = 2
 offset_left = 17.0
 offset_top = 20.0
@@ -85,7 +88,7 @@ offset_bottom = 36.0
 texture = ExtResource("6_e6irg")
 expand_mode = 2
 
-[node name="KeyA" type="TextureRect" parent="CanvasLayer/Panel"]
+[node name="KeyA" type="TextureRect" parent="CanvasLayer/1PControlHint"]
 layout_mode = 2
 offset_left = 4.0
 offset_top = 20.0
@@ -93,7 +96,7 @@ offset_right = 20.0
 offset_bottom = 36.0
 texture = ExtResource("7_uq86q")
 
-[node name="KeyD" type="TextureRect" parent="CanvasLayer/Panel"]
+[node name="KeyD" type="TextureRect" parent="CanvasLayer/1PControlHint"]
 layout_mode = 2
 offset_left = 31.0
 offset_top = 20.0
@@ -101,7 +104,7 @@ offset_right = 47.0
 offset_bottom = 36.0
 texture = ExtResource("8_aa3qu")
 
-[node name="Label" type="Label" parent="CanvasLayer/Panel"]
+[node name="Label" type="Label" parent="CanvasLayer/1PControlHint"]
 custom_minimum_size = Vector2(64, 32)
 layout_mode = 2
 offset_left = 55.0
@@ -112,7 +115,7 @@ text = "移动"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="KeySpace1" type="TextureRect" parent="CanvasLayer/Panel"]
+[node name="KeySpace1" type="TextureRect" parent="CanvasLayer/1PControlHint"]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 46.0
@@ -120,7 +123,7 @@ offset_right = 17.0
 offset_bottom = 62.0
 texture = ExtResource("9_bf81u")
 
-[node name="KeySpace2" type="TextureRect" parent="CanvasLayer/Panel"]
+[node name="KeySpace2" type="TextureRect" parent="CanvasLayer/1PControlHint"]
 layout_mode = 0
 offset_left = 17.0
 offset_top = 46.0
@@ -128,7 +131,7 @@ offset_right = 33.0
 offset_bottom = 62.0
 texture = ExtResource("10_iab34")
 
-[node name="KeySpace3" type="TextureRect" parent="CanvasLayer/Panel"]
+[node name="KeySpace3" type="TextureRect" parent="CanvasLayer/1PControlHint"]
 layout_mode = 0
 offset_left = 33.0
 offset_top = 46.0
@@ -136,7 +139,7 @@ offset_right = 49.0
 offset_bottom = 62.0
 texture = ExtResource("11_58uq4")
 
-[node name="Label2" type="Label" parent="CanvasLayer/Panel"]
+[node name="Label2" type="Label" parent="CanvasLayer/1PControlHint"]
 custom_minimum_size = Vector2(32, 16)
 layout_mode = 0
 offset_left = 71.0
@@ -147,7 +150,7 @@ text = "交互 | 攻击"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label3" type="Label" parent="CanvasLayer/Panel"]
+[node name="Label3" type="Label" parent="CanvasLayer/1PControlHint"]
 layout_mode = 0
 offset_left = -1.0
 offset_top = -50.0
@@ -156,13 +159,13 @@ offset_bottom = 5.0
 theme_override_font_sizes/font_size = 40
 text = "1P"
 
-[node name="Panel2" type="Panel" parent="CanvasLayer"]
+[node name="2PControlHint" type="Panel" parent="CanvasLayer"]
 offset_left = 986.0
 offset_top = 558.0
 offset_right = 1144.0
 offset_bottom = 640.0
 
-[node name="KeyUp" type="TextureRect" parent="CanvasLayer/Panel2"]
+[node name="KeyUp" type="TextureRect" parent="CanvasLayer/2PControlHint"]
 layout_mode = 2
 offset_left = 17.0
 offset_top = 6.0
@@ -170,7 +173,7 @@ offset_right = 33.0
 offset_bottom = 22.0
 texture = ExtResource("12_pe27u")
 
-[node name="KeyDown" type="TextureRect" parent="CanvasLayer/Panel2"]
+[node name="KeyDown" type="TextureRect" parent="CanvasLayer/2PControlHint"]
 layout_mode = 2
 offset_left = 17.0
 offset_top = 20.0
@@ -179,7 +182,7 @@ offset_bottom = 36.0
 texture = ExtResource("13_ne54y")
 expand_mode = 2
 
-[node name="KeyLeft" type="TextureRect" parent="CanvasLayer/Panel2"]
+[node name="KeyLeft" type="TextureRect" parent="CanvasLayer/2PControlHint"]
 layout_mode = 2
 offset_left = 4.0
 offset_top = 20.0
@@ -187,7 +190,7 @@ offset_right = 20.0
 offset_bottom = 36.0
 texture = ExtResource("14_sssj8")
 
-[node name="KeyRight" type="TextureRect" parent="CanvasLayer/Panel2"]
+[node name="KeyRight" type="TextureRect" parent="CanvasLayer/2PControlHint"]
 layout_mode = 2
 offset_left = 31.0
 offset_top = 20.0
@@ -195,7 +198,7 @@ offset_right = 47.0
 offset_bottom = 36.0
 texture = ExtResource("15_u2c8l")
 
-[node name="Label" type="Label" parent="CanvasLayer/Panel2"]
+[node name="Label" type="Label" parent="CanvasLayer/2PControlHint"]
 custom_minimum_size = Vector2(64, 32)
 layout_mode = 2
 offset_left = 55.0
@@ -206,7 +209,7 @@ text = "移动"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="KeyEnter1" type="TextureRect" parent="CanvasLayer/Panel2"]
+[node name="KeyEnter1" type="TextureRect" parent="CanvasLayer/2PControlHint"]
 layout_mode = 0
 offset_left = 7.0
 offset_top = 41.0
@@ -214,7 +217,7 @@ offset_right = 23.0
 offset_bottom = 57.0
 texture = ExtResource("16_g6i1l")
 
-[node name="KeyEnter2" type="TextureRect" parent="CanvasLayer/Panel2"]
+[node name="KeyEnter2" type="TextureRect" parent="CanvasLayer/2PControlHint"]
 layout_mode = 0
 offset_left = 23.0
 offset_top = 41.0
@@ -222,7 +225,7 @@ offset_right = 39.0
 offset_bottom = 57.0
 texture = ExtResource("17_reyx0")
 
-[node name="KeyEnter3" type="TextureRect" parent="CanvasLayer/Panel2"]
+[node name="KeyEnter3" type="TextureRect" parent="CanvasLayer/2PControlHint"]
 layout_mode = 0
 offset_left = 7.0
 offset_top = 57.0
@@ -230,7 +233,7 @@ offset_right = 23.0
 offset_bottom = 73.0
 texture = ExtResource("18_5xnk5")
 
-[node name="KeyEnter4" type="TextureRect" parent="CanvasLayer/Panel2"]
+[node name="KeyEnter4" type="TextureRect" parent="CanvasLayer/2PControlHint"]
 layout_mode = 0
 offset_left = 23.0
 offset_top = 57.0
@@ -238,7 +241,7 @@ offset_right = 39.0
 offset_bottom = 73.0
 texture = ExtResource("19_6ngyt")
 
-[node name="Label2" type="Label" parent="CanvasLayer/Panel2"]
+[node name="Label2" type="Label" parent="CanvasLayer/2PControlHint"]
 custom_minimum_size = Vector2(32, 16)
 layout_mode = 0
 offset_left = 71.0
@@ -249,7 +252,7 @@ text = "交互 | 攻击"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label3" type="Label" parent="CanvasLayer/Panel2"]
+[node name="Label3" type="Label" parent="CanvasLayer/2PControlHint"]
 layout_mode = 0
 offset_left = 108.0
 offset_top = -50.0
@@ -257,3 +260,25 @@ offset_right = 155.0
 offset_bottom = 5.0
 theme_override_font_sizes/font_size = 40
 text = "2P"
+
+[node name="RemainingTime" type="Panel" parent="CanvasLayer"]
+custom_minimum_size = Vector2(200, 50)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/RemainingTime"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "3:00"
+horizontal_alignment = 1
+vertical_alignment = 1
