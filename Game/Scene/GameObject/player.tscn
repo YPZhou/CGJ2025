@@ -1,19 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://ck00pol1kbt6h"]
+[gd_scene load_steps=4 format=3 uid="uid://pbkrpth7c0j8"]
 
 [ext_resource type="Script" uid="uid://cmg88brs637f8" path="res://Script/GameObject/Player.cs" id="1_006tn"]
 [ext_resource type="Texture2D" uid="uid://ph2bw0muq4c5" path="res://icon.svg" id="2_78ywy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_006tn"]
+radius = 66.0076
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("playerHint")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("playerHint", "cursor")]
 script = ExtResource("1_006tn")
 playerHint = NodePath("PlayerHint")
+cursor = NodePath("CursorSprite")
+
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_78ywy")
+
+[node name="CursorSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_78ywy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_006tn")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_78ywy")
 
 [node name="PlayerHint" type="Label" parent="."]
 offset_left = -24.0
