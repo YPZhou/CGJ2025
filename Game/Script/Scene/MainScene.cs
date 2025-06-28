@@ -13,7 +13,7 @@ public partial class MainScene : Node
 
 	ulong gameStartTime;
 	int ElapsedSeconds => (int)((Time.GetTicksMsec() - gameStartTime) / 1000);
-	int RemainingSeconds => Mathf.Max(0, 18 - ElapsedSeconds);
+	int RemainingSeconds => Mathf.Max(0, 180 - ElapsedSeconds);
 	int RemainingMinutes => RemainingSeconds / 60;
 
 	int totalFurnitureCount;
@@ -29,7 +29,7 @@ public partial class MainScene : Node
 
 		gameStartTime = Time.GetTicksMsec();
 		remainingTimeLabel.Text = "剩余  3:00";
-		furnitureCountLabel.Text = $"整理{totalFurnitureCount}件家具";
+		furnitureCountLabel.Text = $"夺回{totalFurnitureCount}件家具";
 
 		furnitureInTargetAreaCount = 0;
 		targetArea.BodyEntered += (body) =>
@@ -62,7 +62,7 @@ public partial class MainScene : Node
 		base._Process(delta);
 
 		remainingTimeLabel.Text = $"剩余  {RemainingMinutes:D1}:{RemainingSeconds % 60:D2}";
-		furnitureCountLabel.Text = $"整理{totalFurnitureCount - furnitureInTargetAreaCount}件家具";
+		furnitureCountLabel.Text = $"夺回{totalFurnitureCount - furnitureInTargetAreaCount}件家具";
 
 		if (RemainingSeconds > 0)
 		{

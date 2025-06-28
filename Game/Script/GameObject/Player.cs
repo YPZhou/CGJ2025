@@ -229,6 +229,7 @@ public partial class Player : CharacterBody2D
 							GetTree().CurrentScene.AddChild(slippers);
 
 							slippers.Position = Position;
+							slippers.Rotate(crosshairAngle);
 							slippers.FlyDirection = crosshairPosition.Normalized();
 
 							soundPlayer.Stream = slippersFlySound;
