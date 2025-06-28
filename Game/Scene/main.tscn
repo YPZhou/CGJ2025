@@ -1,9 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://b2eymyik6mo3o"]
+[gd_scene load_steps=22 format=3 uid="uid://b2eymyik6mo3o"]
 
 [ext_resource type="Script" uid="uid://cbbasc4iewoef" path="res://Script/Scene/MainScene.cs" id="1_e6irg"]
 [ext_resource type="Texture2D" uid="uid://0bp2131d24ug" path="res://Image/Floor.png" id="1_h175a"]
 [ext_resource type="PackedScene" uid="uid://d32cfx4uh1ep8" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
 [ext_resource type="PackedScene" uid="uid://68kwtxkojgcj" path="res://Scene/GameObject/furniture.tscn" id="2_g6ejq"]
+[ext_resource type="AudioStream" uid="uid://yukyfyfvxe2i" path="res://Sound/BGM.mp3" id="2_uq86q"]
 [ext_resource type="PackedScene" uid="uid://1y6hb31hhj0x" path="res://Scene/GameObject/periplaneta.tscn" id="3_djkur"]
 [ext_resource type="Texture2D" uid="uid://54ifojalea4u" path="res://Image/KeyW.png" id="5_hmjy8"]
 [ext_resource type="Texture2D" uid="uid://cnaadm33rwkux" path="res://Image/KeyS.png" id="6_e6irg"]
@@ -21,9 +22,11 @@
 [ext_resource type="Texture2D" uid="uid://du2nacbfkqcx4" path="res://Image/KeyEnter3.png" id="18_5xnk5"]
 [ext_resource type="Texture2D" uid="uid://dv8h0fix16upj" path="res://Image/KeyEnter4.png" id="19_6ngyt"]
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("remainingTimeLabel")]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("remainingTimeLabel", "bgmPlayer")]
 script = ExtResource("1_e6irg")
 remainingTimeLabel = NodePath("CanvasLayer/RemainingTime/Label")
+bgmPlayer = NodePath("AudioStreamPlayer")
+bgm = ExtResource("2_uq86q")
 
 [node name="Floor" type="Sprite2D" parent="."]
 rotation = 1.5708
@@ -282,3 +285,5 @@ theme_override_font_sizes/font_size = 40
 text = "3:00"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

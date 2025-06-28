@@ -5,6 +5,9 @@ namespace CGJ2025;
 public partial class MainScene : Node
 {
 	[Export] Label remainingTimeLabel;
+	[Export] AudioStreamPlayer bgmPlayer;
+	
+	[Export] AudioStream bgm;
 
 	ulong gameStartTime;
 	int ElapsedSeconds => (int)((Time.GetTicksMsec() - gameStartTime) / 1000);
@@ -17,6 +20,10 @@ public partial class MainScene : Node
 
 		gameStartTime = Time.GetTicksMsec();
 		remainingTimeLabel.Text = "3:00";
+
+		bgmPlayer.Stream = bgm;
+		bgmPlayer.Finished += () => bgmPlayer.Play();
+		bgmPlayer.Play();
 	}
 
 	public override void _Process(double delta)
