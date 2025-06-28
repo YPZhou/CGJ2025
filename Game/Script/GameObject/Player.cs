@@ -21,8 +21,10 @@ public partial class Player : CharacterBody2D
 	[Export] PlayerID PlayerID;
 	[Export] Label playerHint;
 	[Export] Sprite2D crosshair;
+	[Export] Sprite2D meleeFlipFlop;
 
 	[Export] Area2D furniturePicking;
+	[Export] Area2D meleeAttackRange;
 
 	public FlipFlop flipFlop;
 
@@ -40,6 +42,12 @@ public partial class Player : CharacterBody2D
 	float aimingStartTime;
 	float AimingTime => Time.GetTicksMsec() - aimingStartTime;
 	float aimingThreshold = 100f;
+
+	float meleeAttackStartTime;
+	float MeleeAttackTime => Time.GetTicksMsec() - meleeAttackStartTime;
+	float meleeAttackDuration = 200f;
+
+	Tween meleeAttackTween;
 
 	Dictionary<PlayerID, List<Key>> keyMappings = new()
 	{
@@ -68,6 +76,8 @@ public partial class Player : CharacterBody2D
 		crosshairPosition = new Vector2(0, -200f);
 		aimingStartTime = 0f;
 
+		meleeFlipFlop.Visible = false;
+
 		furniturePicking.BodyEntered += (body) =>
 		{
 			if (body is Furniture furniture && furniture.Status == Furniture_Status.FREE && status == PlayerStatus.Normal)
@@ -91,6 +101,17 @@ public partial class Player : CharacterBody2D
 					_faceFurniture.UpdateCanHold(PlayerID, false);
 					_faceFurniture = null;
 				}
+			}
+		};
+
+		meleeAttackRange.Monitoring = false;
+		meleeAttackRange.Monitorable = false;
+
+		meleeAttackRange.BodyEntered += (body) =>
+		{
+			if (body is Periplaneta periplaneta)
+			{
+				GD.Print(Name, "命中", periplaneta.Name);
 			}
 		};
 
@@ -125,6 +146,14 @@ public partial class Player : CharacterBody2D
 			crosshair.Visible = false;
 			crosshair.Position = Vector2.Zero;
 		}
+
+		if (MeleeAttackTime >= meleeAttackDuration)
+		{
+			meleeAttackRange.Monitoring = false;
+			meleeFlipFlop.Visible = false;
+			meleeFlipFlop.Modulate = new Color(meleeFlipFlop.Modulate, 0f);
+			meleeAttackTween?.Kill();
+		}
 	}
 
 	void ProcessInput()
@@ -145,7 +174,7 @@ public partial class Player : CharacterBody2D
 						_holdupFurniture.UpdateCanHold(PlayerID, false);
 						status = PlayerStatus.Holding;
 
-						GD.Print("搬运", _holdupFurniture);
+						GD.Print(Name, "搬运", _holdupFurniture);
 					}
 					else
 					{
@@ -168,6 +197,15 @@ public partial class Player : CharacterBody2D
 					}
 					else
 					{
+						if (!meleeAttackRange.Monitoring)
+						{
+							meleeAttackRange.Monitoring = true;
+							meleeAttackStartTime = Time.GetTicksMsec();
+
+							meleeFlipFlop.Visible = true;
+							meleeAttackTween = CreateTween();
+							meleeAttackTween.TweenProperty(meleeFlipFlop, "modulate:a", 255f, meleeAttackDuration);
+						}
 					}
 
 					status = PlayerStatus.Normal;
@@ -181,7 +219,7 @@ public partial class Player : CharacterBody2D
 			case PlayerStatus.Holding:
 				if (!Input.IsKeyPressed(keys[interactKey]))
 				{
-					GD.Print("放下", _holdupFurniture);
+					GD.Print(Name, "放下", _holdupFurniture);
 
 					_holdupFurniture.OnPutdown();
 					_holdupFurniture.UpdateCanHold(PlayerID, true);

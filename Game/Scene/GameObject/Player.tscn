@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://pbkrpth7c0j8"]
+[gd_scene load_steps=6 format=3 uid="uid://pbkrpth7c0j8"]
 
 [ext_resource type="Script" uid="uid://cmg88brs637f8" path="res://Script/GameObject/Player.cs" id="1_006tn"]
 [ext_resource type="Texture2D" uid="uid://ph2bw0muq4c5" path="res://icon.svg" id="2_78ywy"]
@@ -9,17 +9,27 @@ radius = 66.0076
 [sub_resource type="CircleShape2D" id="CircleShape2D_78ywy"]
 radius = 104.307
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("playerHint", "crosshair", "furniturePicking")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_3kjfs"]
+radius = 150.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("playerHint", "crosshair", "meleeFlipFlop", "furniturePicking", "meleeAttackRange")]
 script = ExtResource("1_006tn")
 playerHint = NodePath("PlayerHint")
 crosshair = NodePath("CrosshairSprite")
+meleeFlipFlop = NodePath("FlipFlopSprite")
 furniturePicking = NodePath("FurniturePickingArea")
+meleeAttackRange = NodePath("MeleeAttackArea")
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_78ywy")
 
 [node name="CrosshairSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_78ywy")
+
+[node name="FlipFlopSprite" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0, 0, 1)
+scale = Vector2(2, 2)
 texture = ExtResource("2_78ywy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -39,3 +49,8 @@ vertical_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FurniturePickingArea"]
 shape = SubResource("CircleShape2D_78ywy")
+
+[node name="MeleeAttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeAttackArea"]
+shape = SubResource("CircleShape2D_3kjfs")
