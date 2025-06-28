@@ -74,6 +74,7 @@ public partial class Player : CharacterBody2D
 			{
 				GD.Print("靠近", furniture.Name);
 				_faceFurniture = furniture;
+				_faceFurniture.ToggleCanHold(PlayerID);
 			}
 		};
 
@@ -84,6 +85,7 @@ public partial class Player : CharacterBody2D
 				GD.Print("离开", furniture.Name);
 				if (_faceFurniture == furniture)
 				{
+					_faceFurniture.ToggleCanHold(PlayerID);
 					_faceFurniture = null;
 				}
 			}

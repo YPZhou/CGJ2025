@@ -1,5 +1,6 @@
 using Godot;
-using System;
+
+namespace CGJ2025;
 
 public enum Periplaneta_Status
 {
