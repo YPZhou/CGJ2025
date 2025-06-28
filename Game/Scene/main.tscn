@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3ohg2xk4yk7k"]
+[gd_scene load_steps=3 format=3 uid="uid://d16l6t7gl7xh2"]
 
-[ext_resource type="PackedScene" uid="uid://cwjv7iv62x21g" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
+[ext_resource type="PackedScene" uid="uid://pbkrpth7c0j8" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
 [ext_resource type="PackedScene" uid="uid://68kwtxkojgcj" path="res://Scene/GameObject/furniture.tscn" id="2_g6ejq"]
 
 [node name="Node2D" type="Node2D"]
@@ -8,16 +8,16 @@
 [node name="Player1" parent="." instance=ExtResource("1_xhtwi")]
 modulate = Color(0, 1, 0, 1)
 position = Vector2(559, 444)
-PlayerID = 0
+slippersScene = null
 
 [node name="Furniture" parent="." instance=ExtResource("2_g6ejq")]
 position = Vector2(330, 240)
-Status = 0
 
 [node name="Player2" parent="." instance=ExtResource("1_xhtwi")]
 modulate = Color(0, 0, 1, 1)
 position = Vector2(881, 446)
 PlayerID = 1
+slippersScene = null
 
 [node name="Furniture2" parent="." instance=ExtResource("2_g6ejq")]
 position = Vector2(746, 192)

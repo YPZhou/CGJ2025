@@ -6,10 +6,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bqyfo"]
 size = Vector2(123, 124)
 
-[node name="Furniture" type="StaticBody2D" node_paths=PackedStringArray("holdHint", "collisionShape")]
+[node name="Furniture" type="StaticBody2D"]
 script = ExtResource("1_bqyfo")
-holdHint = NodePath("HoldHint")
-collisionShape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -1)

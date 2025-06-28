@@ -15,5 +15,5 @@ DangerDistence = 2000.0
 texture = ExtResource("2_ygplf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_ygplf")
+disabled = true

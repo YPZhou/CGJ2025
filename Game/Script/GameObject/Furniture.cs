@@ -20,7 +20,7 @@ public partial class Furniture : Node2D
 	[Signal] public delegate void InteractiveEventHandler();
 	[Signal] public delegate void HoldupEventHandler();
 	[Signal] public delegate void HoldupMoveEventHandler();
-	[Signal] public delegate void PeriMoveEventHandler();
+	[Signal] public delegate void PeriMoveEventHandler(Vector2 periPos, Periplaneta peri);
 
 	private bool IsHoldup;
 	Dictionary<PlayerID, bool> canHoldLookups = new() { { PlayerID.Player1, false }, { PlayerID.Player2, false } };
@@ -88,10 +88,14 @@ public partial class Furniture : Node2D
 	{
 	}
 
-	public void OnPeriMove()
+	public void OnPeriMove(Vector2 periPos, Periplaneta peri)
 	{
 		if (IsHoldup)
 			return;
+
+		GlobalPosition = periPos;
+		peri.GlobalPosition = periPos;
+
 	}
 
 	public void UpdateCanHold(PlayerID playerID, bool canHold)
