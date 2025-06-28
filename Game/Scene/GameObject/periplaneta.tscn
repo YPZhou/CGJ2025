@@ -7,8 +7,8 @@
 radius = 62.0081
 
 [node name="Periplaneta" type="CharacterBody2D"]
-collision_layer = 32
-collision_mask = 16
+collision_layer = 48
+collision_mask = 48
 script = ExtResource("1_ygplf")
 MaxHealth = 2
 
