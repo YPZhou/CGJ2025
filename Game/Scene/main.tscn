@@ -41,20 +41,22 @@ position = Vector2(-1054, 277)
 [node name="Player2" parent="." instance=ExtResource("1_xhtwi")]
 position = Vector2(2783, 1490)
 PlayerID = 1
-player1Texture = null
-player2Texture = null
 
 [node name="Furniture2" parent="." instance=ExtResource("2_g6ejq")]
 position = Vector2(1553, 592)
 
 [node name="Periplaneta" parent="." instance=ExtResource("3_djkur")]
 position = Vector2(524, 123)
+collision_layer = 3
+collision_mask = 3
 AlertDistence = 1000.0
 DangerDistence = 2000.0
 MaxHealth = 15
 
 [node name="Periplaneta2" parent="." instance=ExtResource("3_djkur")]
 position = Vector2(-1777, -106)
+collision_layer = 3
+collision_mask = 3
 AlertDistence = 1000.0
 DangerDistence = 2000.0
 CD = 2.0
@@ -113,6 +115,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="KeySpace1" type="TextureRect" parent="CanvasLayer/Panel"]
+layout_mode = 0
 offset_left = 1.0
 offset_top = 46.0
 offset_right = 17.0
@@ -120,6 +123,7 @@ offset_bottom = 62.0
 texture = ExtResource("9_bf81u")
 
 [node name="KeySpace2" type="TextureRect" parent="CanvasLayer/Panel"]
+layout_mode = 0
 offset_left = 17.0
 offset_top = 46.0
 offset_right = 33.0
@@ -127,6 +131,7 @@ offset_bottom = 62.0
 texture = ExtResource("10_iab34")
 
 [node name="KeySpace3" type="TextureRect" parent="CanvasLayer/Panel"]
+layout_mode = 0
 offset_left = 33.0
 offset_top = 46.0
 offset_right = 49.0
@@ -135,6 +140,7 @@ texture = ExtResource("11_58uq4")
 
 [node name="Label2" type="Label" parent="CanvasLayer/Panel"]
 custom_minimum_size = Vector2(32, 16)
+layout_mode = 0
 offset_left = 71.0
 offset_top = 37.0
 offset_right = 153.0
@@ -203,6 +209,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="KeyEnter1" type="TextureRect" parent="CanvasLayer/Panel2"]
+layout_mode = 0
 offset_left = 7.0
 offset_top = 41.0
 offset_right = 23.0
@@ -210,6 +217,7 @@ offset_bottom = 57.0
 texture = ExtResource("16_g6i1l")
 
 [node name="KeyEnter2" type="TextureRect" parent="CanvasLayer/Panel2"]
+layout_mode = 0
 offset_left = 23.0
 offset_top = 41.0
 offset_right = 39.0
@@ -217,6 +225,7 @@ offset_bottom = 57.0
 texture = ExtResource("17_reyx0")
 
 [node name="KeyEnter3" type="TextureRect" parent="CanvasLayer/Panel2"]
+layout_mode = 0
 offset_left = 7.0
 offset_top = 57.0
 offset_right = 23.0
@@ -224,6 +233,7 @@ offset_bottom = 73.0
 texture = ExtResource("18_5xnk5")
 
 [node name="KeyEnter4" type="TextureRect" parent="CanvasLayer/Panel2"]
+layout_mode = 0
 offset_left = 23.0
 offset_top = 57.0
 offset_right = 39.0
@@ -232,6 +242,7 @@ texture = ExtResource("19_6ngyt")
 
 [node name="Label2" type="Label" parent="CanvasLayer/Panel2"]
 custom_minimum_size = Vector2(32, 16)
+layout_mode = 0
 offset_left = 71.0
 offset_top = 40.0
 offset_right = 153.0
