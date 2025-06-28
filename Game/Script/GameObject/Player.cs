@@ -20,6 +20,7 @@ public partial class Player : CharacterBody2D
 {
 	[Export] PlayerID PlayerID;
 	[Export] Label playerHint;
+	[Export] Label slippersCountHint;
 	[Export] Sprite2D crosshair;
 	[Export] Sprite2D meleeFlipFlop;
 
@@ -74,6 +75,8 @@ public partial class Player : CharacterBody2D
 			playerHint.Text = "2P";
 		}
 
+		slippersCountHint.Text = slippersCount.ToString();
+
 		crosshair.Visible = false;
 		crosshairPosition = new Vector2(0, -200f);
 		aimingStartTime = 0f;
@@ -91,6 +94,11 @@ public partial class Player : CharacterBody2D
 					_faceFurniture = furniture;
 					_faceFurniture.UpdateCanHold(PlayerID, true);
 				}
+			}
+			else if (body is Slippers slippers && slippers.Status == SlippersStatus.STOPPED)
+			{
+				slippers.QueueFree();
+				slippersCount += 1;
 			}
 		};
 
@@ -136,6 +144,8 @@ public partial class Player : CharacterBody2D
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
+
+		slippersCountHint.Text = slippersCount.ToString();
 
 		ProcessInput();
 
