@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 
 namespace CGJ2025;
 
@@ -13,13 +14,19 @@ public partial class Player : CharacterBody2D
 	[Export] PlayerID PlayerID;
 	[Export] Label playerHint;
 
-	Vector2 moveDirection;
-
 	public FlipFlop flipFlop;
 
 	private Furniture _faceFurniture;
 	private Furniture _holdupFurniture;
 
+	Vector2 moveDirection;
+	float moveSpeed = 400f;
+
+	Dictionary<PlayerID, List<Key>> keyMappings = new()
+	{
+		{ PlayerID.Player1, new List<Key> { Key.W, Key.S, Key.A, Key.D } },
+		{ PlayerID.Player2, new List<Key> { Key.Up, Key.Down, Key.Left, Key.Right } }
+	};
 
 	public override void _Ready()
 	{
@@ -35,39 +42,54 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-	public override void _Input(InputEvent @event)
+	public override void _PhysicsProcess(double delta)
 	{
-		// todo: move
-		// todo: interactive
-		// todo: holdup
-		// todo: attack
+		base._PhysicsProcess(delta);
 
-		if (@event is InputEventKey keyEvent && keyEvent.IsPressed())
+		if (moveDirection != Vector2.Zero)
 		{
-			if (PlayerID == PlayerID.Player1)
-			{
-				ProcessInputForPlayer1(keyEvent);
-			}
-			else if (PlayerID == PlayerID.Player2)
-			{
-				ProcessInputForPlayer2(keyEvent);
-			}
+			Velocity = moveDirection;
+			MoveAndSlide();
 		}
 	}
 
-	void ProcessInputForPlayer1(InputEventKey keyEvent)
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
+
+		ProcessInput();
+	}
+
+	void ProcessInput()
+	{
+		var keys = keyMappings[PlayerID];
+		ProcessMove(keys);
+	}
+
+	void ProcessMove(List<Key> keys)
 	{
 		moveDirection = Vector2.Zero;
-		if (keyEvent.Keycode == Key.W)
+		if (Input.IsKeyPressed(keys[0]))
 		{
 			moveDirection += Vector2.Up;
 		}
 
-		moveDirection = moveDirection.Normalized();
-	}
+		if (Input.IsKeyPressed(keys[1]))
+		{
+			moveDirection += Vector2.Down;
+		}
 
-	void ProcessInputForPlayer2(InputEventKey keyEvent)
-	{
+		if (Input.IsKeyPressed(keys[2]))
+		{
+			moveDirection += Vector2.Left;
+		}
+
+		if (Input.IsKeyPressed(keys[3]))
+		{
+			moveDirection += Vector2.Right;
+		}
+
+		moveDirection = moveDirection.Normalized() * moveSpeed;
 	}
 
 	public void Interactive()
