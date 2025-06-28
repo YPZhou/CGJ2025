@@ -22,6 +22,8 @@ public partial class Player : CharacterBody2D
 	[Export] Label playerHint;
 	[Export] Sprite2D crosshair;
 
+	[Export] Area2D furniturePicking;
+
 	public FlipFlop flipFlop;
 
 	private Furniture _faceFurniture;
@@ -65,6 +67,27 @@ public partial class Player : CharacterBody2D
 		crosshair.Visible = false;
 		crosshairPosition = new Vector2(0, -200f);
 		aimingStartTime = 0f;
+
+		furniturePicking.BodyEntered += (body) =>
+		{
+			if (body is Furniture furniture)
+			{
+				GD.Print("靠近", furniture.Name);
+				_faceFurniture = furniture;
+			}
+		};
+
+		furniturePicking.BodyExited += (body) =>
+		{
+			if (body is Furniture furniture)
+			{
+				GD.Print("离开", furniture.Name);
+				if (_faceFurniture == furniture)
+				{
+					_faceFurniture = null;
+				}
+			}
+		};
 
 		status = PlayerStatus.Normal;
 		moveDirection = Vector2.Zero;
