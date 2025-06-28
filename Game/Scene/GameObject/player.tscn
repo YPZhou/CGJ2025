@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://blnrtn2d8p6wi"]
+[gd_scene load_steps=9 format=3 uid="uid://blnrtn2d8p6wi"]
 
 [ext_resource type="Script" uid="uid://cmg88brs637f8" path="res://Script/GameObject/Player.cs" id="1_006tn"]
 [ext_resource type="PackedScene" uid="uid://mnkax4hxm58q" path="res://Scene/GameObject/Weapon/Slippers.tscn" id="2_3kjfs"]
 [ext_resource type="Texture2D" uid="uid://ph2bw0muq4c5" path="res://icon.svg" id="2_78ywy"]
+[ext_resource type="AudioStream" uid="uid://dvkrym5wijnf7" path="res://Sound/SlippersHit.mp3" id="3_u8jkq"]
+[ext_resource type="AudioStream" uid="uid://bm0w7ploqoqvp" path="res://Sound/SlippersFly.mp3" id="4_tse35"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_006tn"]
 radius = 66.0076
@@ -13,7 +15,7 @@ radius = 104.307
 [sub_resource type="CircleShape2D" id="CircleShape2D_3kjfs"]
 radius = 150.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("playerHint", "slippersCountHint", "crosshair", "meleeFlipFlop", "furniturePicking", "meleeAttackRange")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("playerHint", "slippersCountHint", "crosshair", "meleeFlipFlop", "furniturePicking", "meleeAttackRange", "soundPlayer")]
 script = ExtResource("1_006tn")
 playerHint = NodePath("PlayerHint")
 slippersCountHint = NodePath("SlippersCount")
@@ -22,6 +24,11 @@ meleeFlipFlop = NodePath("FlipFlopSprite")
 furniturePicking = NodePath("FurniturePickingArea")
 meleeAttackRange = NodePath("MeleeAttackArea")
 slippersScene = ExtResource("2_3kjfs")
+soundPlayer = NodePath("AudioStreamPlayer")
+slippersHitSound = ExtResource("3_u8jkq")
+slippersFlySound = ExtResource("4_tse35")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_78ywy")

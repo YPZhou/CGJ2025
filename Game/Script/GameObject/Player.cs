@@ -29,6 +29,10 @@ public partial class Player : CharacterBody2D
 
 	[Export] PackedScene slippersScene;
 
+	[Export] AudioStreamPlayer soundPlayer;
+	[Export] AudioStream slippersHitSound;
+	[Export] AudioStream slippersFlySound;
+
 	private Furniture _faceFurniture;
 	private Furniture _holdupFurniture;
 
@@ -217,6 +221,9 @@ public partial class Player : CharacterBody2D
 							slippers.Position = Position;
 							slippers.FlyDirection = crosshairPosition.Normalized();
 
+							soundPlayer.Stream = slippersFlySound;
+							soundPlayer.Play();
+
 							GD.Print(Name, "投掷", slippers.Name);
 						}
 						else
@@ -229,6 +236,9 @@ public partial class Player : CharacterBody2D
 								meleeFlipFlop.Visible = true;
 								meleeAttackTween = CreateTween();
 								meleeAttackTween.TweenProperty(meleeFlipFlop, "modulate:a", 255f, meleeAttackDuration);
+
+								soundPlayer.Stream = slippersHitSound;
+								soundPlayer.Play();
 
 								GD.Print(Name, "挥舞拖鞋");
 							}
