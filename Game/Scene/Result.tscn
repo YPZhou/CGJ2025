@@ -29,6 +29,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_85ulj")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -41,6 +43,7 @@ theme_override_constants/separation = 20
 
 [node name="WinLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 10
 theme_override_font_sizes/font_size = 80
 text = "我们胜利了！
 暂时的！"
@@ -50,6 +53,7 @@ vertical_alignment = 1
 [node name="LoseLabel" type="Label" parent="VBoxContainer"]
 visible = false
 layout_mode = 2
+size_flags_vertical = 10
 theme_override_font_sizes/font_size = 80
 text = "我们失败了！
 决不放弃！"

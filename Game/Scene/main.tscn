@@ -97,10 +97,12 @@ position = Vector2(-753, -214)
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="1PControlHint" type="Panel" parent="CanvasLayer"]
-offset_left = 9.0
-offset_top = 568.0
-offset_right = 167.0
-offset_bottom = 640.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -72.0
+offset_right = 158.0
+grow_vertical = 0
 
 [node name="KeyW" type="TextureRect" parent="CanvasLayer/1PControlHint"]
 layout_mode = 2
@@ -191,10 +193,15 @@ theme_override_font_sizes/font_size = 40
 text = "1P"
 
 [node name="2PControlHint" type="Panel" parent="CanvasLayer"]
-offset_left = 986.0
-offset_top = 558.0
-offset_right = 1144.0
-offset_bottom = 640.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -158.0
+offset_top = -82.0
+grow_horizontal = 0
+grow_vertical = 0
 
 [node name="KeyUp" type="TextureRect" parent="CanvasLayer/2PControlHint"]
 layout_mode = 2
