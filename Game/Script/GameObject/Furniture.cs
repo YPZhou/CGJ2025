@@ -24,6 +24,8 @@ public partial class Furniture : CharacterBody2D
 	private bool IsHoldup;
 	Dictionary<PlayerID, bool> canHoldLookups = new() { { PlayerID.Player1, false }, { PlayerID.Player2, false } };
 
+	public static int FurnitureCount;
+
 	public override void _Ready()
 	{
 		holdHint.Visible = false;
@@ -32,6 +34,8 @@ public partial class Furniture : CharacterBody2D
 		Holdup += OnHoldup;
 		HoldupMove += OnMove;
 		PeriMove += OnPeriMove;
+
+		FurnitureCount += 1;
 	}
 
 	public override void _Process(double delta)

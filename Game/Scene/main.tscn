@@ -31,9 +31,10 @@ size = Vector2(5763, 200)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aa3qu"]
 size = Vector2(207, 3581)
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("remainingTimeLabel", "targetArea", "bgmPlayer")]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("remainingTimeLabel", "furnitureCountLabel", "targetArea", "bgmPlayer")]
 script = ExtResource("1_e6irg")
-remainingTimeLabel = NodePath("CanvasLayer/RemainingTime/Label")
+remainingTimeLabel = NodePath("CanvasLayer/RemainingTime/HBoxContainer/TimeLabel")
+furnitureCountLabel = NodePath("CanvasLayer/RemainingTime/HBoxContainer/FurnitureLabel")
 targetArea = NodePath("TargetArea/Area2D")
 bgmPlayer = NodePath("AudioStreamPlayer")
 bgm = ExtResource("2_uq86q")
@@ -73,6 +74,18 @@ PlayerID = 1
 
 [node name="Furniture2" parent="." instance=ExtResource("2_g6ejq")]
 position = Vector2(1553, 592)
+
+[node name="Furniture3" parent="." instance=ExtResource("2_g6ejq")]
+position = Vector2(-317, 1210)
+
+[node name="Furniture4" parent="." instance=ExtResource("2_g6ejq")]
+position = Vector2(673, 1114)
+
+[node name="Furniture5" parent="." instance=ExtResource("2_g6ejq")]
+position = Vector2(1486, -606)
+
+[node name="Furniture6" parent="." instance=ExtResource("2_g6ejq")]
+position = Vector2(-2265, -1053)
 
 [node name="Periplaneta" parent="." instance=ExtResource("3_djkur")]
 position = Vector2(693, -431)
@@ -279,7 +292,7 @@ theme_override_font_sizes/font_size = 40
 text = "2P"
 
 [node name="RemainingTime" type="Panel" parent="CanvasLayer"]
-custom_minimum_size = Vector2(200, 50)
+custom_minimum_size = Vector2(600, 50)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -288,15 +301,29 @@ offset_right = 20.0
 offset_bottom = 40.0
 grow_horizontal = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/RemainingTime"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/RemainingTime"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer/RemainingTime/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
 theme_override_font_sizes/font_size = 40
-text = "3:00"
+text = "剩余  3:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FurnitureLabel" type="Label" parent="CanvasLayer/RemainingTime/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 40
+text = "整理2件家具"
 horizontal_alignment = 1
 vertical_alignment = 1
 

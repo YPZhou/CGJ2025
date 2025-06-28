@@ -5,6 +5,7 @@ namespace CGJ2025;
 public partial class MainScene : Node
 {
 	[Export] Label remainingTimeLabel;
+	[Export] Label furnitureCountLabel;
 	[Export] public Area2D targetArea;
 	[Export] AudioStreamPlayer bgmPlayer;
 	
@@ -15,14 +16,18 @@ public partial class MainScene : Node
 	int RemainingSeconds => Mathf.Max(0, 180 - ElapsedSeconds);
 	int RemainingMinutes => RemainingSeconds / 60;
 
+	int totalFurnitureCount;
 	int furnitureInTargetAreaCount;
 
 	public override void _Ready()
 	{
 		base._Ready();
 
+		totalFurnitureCount = Furniture.FurnitureCount;
+
 		gameStartTime = Time.GetTicksMsec();
-		remainingTimeLabel.Text = "3:00";
+		remainingTimeLabel.Text = "剩余  3:00";
+		furnitureCountLabel.Text = $"整理{totalFurnitureCount}件家具";
 
 		furnitureInTargetAreaCount = 0;
 		targetArea.BodyEntered += (body) =>
@@ -54,6 +59,7 @@ public partial class MainScene : Node
 	{
 		base._Process(delta);
 
-		remainingTimeLabel.Text = $"{RemainingMinutes:D1}:{RemainingSeconds % 60:D2}";
+		remainingTimeLabel.Text = $"剩余  {RemainingMinutes:D1}:{RemainingSeconds % 60:D2}";
+		furnitureCountLabel.Text = $"整理{totalFurnitureCount - furnitureInTargetAreaCount}件家具";
 	}
 }
