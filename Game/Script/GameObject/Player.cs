@@ -73,7 +73,7 @@ public partial class Player : CharacterBody2D
 			if (body is Furniture furniture && furniture.Status == Furniture_Status.FREE && status == PlayerStatus.Normal)
 			{
 				_faceFurniture = furniture;
-				_faceFurniture.ToggleCanHold(PlayerID);
+				_faceFurniture.UpdateCanHold(PlayerID, true);
 			}
 		};
 
@@ -83,7 +83,7 @@ public partial class Player : CharacterBody2D
 			{
 				if (_faceFurniture == furniture)
 				{
-					_faceFurniture.ToggleCanHold(PlayerID);
+					_faceFurniture.UpdateCanHold(PlayerID, false);
 					_faceFurniture = null;
 				}
 			}
@@ -137,6 +137,7 @@ public partial class Player : CharacterBody2D
 						_faceFurniture = null;
 
 						_holdupFurniture.OnHoldup();
+						_holdupFurniture.UpdateCanHold(PlayerID, false);
 						status = PlayerStatus.Holding;
 
 						GD.Print("搬运", _holdupFurniture);
@@ -175,11 +176,11 @@ public partial class Player : CharacterBody2D
 			case PlayerStatus.Holding:
 				if (!Input.IsKeyPressed(keys[interactKey]))
 				{
-					// 放下家具
-					// ...
 					GD.Print("放下", _holdupFurniture);
 
 					_holdupFurniture.OnPutdown();
+					_holdupFurniture.UpdateCanHold(PlayerID, true);
+					_faceFurniture = _holdupFurniture;
 					_holdupFurniture = null;
 					status = PlayerStatus.Normal;
 				}
@@ -280,16 +281,5 @@ public partial class Player : CharacterBody2D
 	public void Holdup()
 	{
 		_faceFurniture.EmitSignal(Furniture.SignalName.Holdup);
-	}
-
-	public void FreeMove()
-	{
-		// todo
-	}
-
-	public void HoldupMove()
-	{
-		// todo
-		_holdupFurniture.EmitSignal(Furniture.SignalName.HoldupMove);
 	}
 }

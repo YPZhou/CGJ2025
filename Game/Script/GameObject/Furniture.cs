@@ -94,8 +94,8 @@ public partial class Furniture : Node2D
 			return;
 	}
 
-	public void ToggleCanHold(PlayerID playerID)
+	public void UpdateCanHold(PlayerID playerID, bool canHold)
 	{
-		canHoldLookups[playerID] = !canHoldLookups[playerID];
+		canHoldLookups[playerID] = canHold;
 	}
 }
