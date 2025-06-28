@@ -30,3 +30,8 @@ position = Vector2(1553, 592)
 
 [node name="Periplaneta" parent="." instance=ExtResource("3_djkur")]
 position = Vector2(524, 123)
+collision_layer = 1
+collision_mask = 1
+AlertDistence = 1000.0
+DangerDistence = 2000.0
+MaxHealth = 15
