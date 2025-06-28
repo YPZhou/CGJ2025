@@ -20,6 +20,7 @@ public partial class Player : CharacterBody2D
 {
 	[Export] PlayerID PlayerID;
 	[Export] Label playerHint;
+	[Export] Label slippersCountHint;
 	[Export] Sprite2D crosshair;
 	[Export] Sprite2D meleeFlipFlop;
 
@@ -74,6 +75,8 @@ public partial class Player : CharacterBody2D
 			playerHint.Text = "2P";
 		}
 
+		slippersCountHint.Text = slippersCount.ToString();
+
 		crosshair.Visible = false;
 		crosshairPosition = new Vector2(0, -200f);
 		aimingStartTime = 0f;
@@ -91,6 +94,11 @@ public partial class Player : CharacterBody2D
 					_faceFurniture = furniture;
 					_faceFurniture.UpdateCanHold(PlayerID, true);
 				}
+			}
+			else if (body is Slippers slippers && slippers.Status == SlippersStatus.STOPPED)
+			{
+				slippers.QueueFree();
+				slippersCount += 1;
 			}
 		};
 
@@ -113,6 +121,7 @@ public partial class Player : CharacterBody2D
 		{
 			if (body is Periplaneta periplaneta)
 			{
+				periplaneta.OnDamage();
 				GD.Print(Name, "命中", periplaneta.Name);
 			}
 		};
@@ -136,6 +145,8 @@ public partial class Player : CharacterBody2D
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
+
+		slippersCountHint.Text = slippersCount.ToString();
 
 		ProcessInput();
 
@@ -195,26 +206,32 @@ public partial class Player : CharacterBody2D
 			case PlayerStatus.Aiming:
 				if (!Input.IsKeyPressed(keys[interactKey]))
 				{
-					if (AimingTime >= aimingThreshold && slippersCount > 0)
+					if (slippersCount > 0)
 					{
-						slippersCount -= 1;
-						var slippers = slippersScene.Instantiate<Slippers>();
-						GetTree().CurrentScene.AddChild(slippers);
-
-						GD.Print(Name, "投掷", slippers.Name);
-					}
-					else
-					{
-						if (!meleeAttackRange.Monitoring)
+						if (AimingTime >= aimingThreshold)
 						{
-							meleeAttackRange.Monitoring = true;
-							meleeAttackStartTime = Time.GetTicksMsec();
+							slippersCount -= 1;
+							var slippers = slippersScene.Instantiate<Slippers>();
+							GetTree().CurrentScene.AddChild(slippers);
 
-							meleeFlipFlop.Visible = true;
-							meleeAttackTween = CreateTween();
-							meleeAttackTween.TweenProperty(meleeFlipFlop, "modulate:a", 255f, meleeAttackDuration);
+							slippers.Position = Position;
+							slippers.FlyDirection = crosshairPosition.Normalized();
 
-							GD.Print(Name, "挥舞拖鞋");
+							GD.Print(Name, "投掷", slippers.Name);
+						}
+						else
+						{
+							if (!meleeAttackRange.Monitoring)
+							{
+								meleeAttackRange.Monitoring = true;
+								meleeAttackStartTime = Time.GetTicksMsec();
+
+								meleeFlipFlop.Visible = true;
+								meleeAttackTween = CreateTween();
+								meleeAttackTween.TweenProperty(meleeFlipFlop, "modulate:a", 255f, meleeAttackDuration);
+
+								GD.Print(Name, "挥舞拖鞋");
+							}
 						}
 					}
 

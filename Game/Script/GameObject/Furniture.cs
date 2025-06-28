@@ -11,7 +11,7 @@ public enum Furniture_Status
 	HOLDUP,
 }
 
-public partial class Furniture : Node2D
+public partial class Furniture : StaticBody2D
 {
 	[Export] public Furniture_Status Status;
 	[Export] Label holdHint;
