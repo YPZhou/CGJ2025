@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://caj44oxse3e1"]
+[gd_scene load_steps=5 format=3 uid="uid://caj44oxse3e1"]
 
 [ext_resource type="Script" uid="uid://5fy6wnx7jql0" path="res://Script/Scene/TitleScene.cs" id="1_r8pmb"]
 [ext_resource type="Texture2D" uid="uid://ph2bw0muq4c5" path="res://icon.svg" id="2_m405t"]
 [ext_resource type="Texture2D" uid="uid://ctpql1owuc2xg" path="res://Image/StartGame.png" id="3_5ktd1"]
 
-[node name="Title" type="Control" node_paths=PackedStringArray("startRect", "quitRect")]
+[sub_resource type="SystemFont" id="SystemFont_5ktd1"]
+font_names = PackedStringArray("SimHei")
+
+[node name="Title" type="Control" node_paths=PackedStringArray("startRect", "startLabel", "quitRect", "quitLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +16,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_r8pmb")
 startRect = NodePath("Panel/HBoxContainer/VBoxContainer/Start")
+startLabel = NodePath("Panel/HBoxContainer/VBoxContainer/Start/StartGameLabel")
 quitRect = NodePath("Panel/HBoxContainer/VBoxContainer/Quit")
+quitLabel = NodePath("Panel/HBoxContainer/VBoxContainer/Quit/QuitGameLabel")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -51,9 +56,42 @@ texture = ExtResource("3_5ktd1")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="StartGameLabel" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Start"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 91.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_5ktd1")
+theme_override_font_sizes/font_size = 20
+text = "开始游戏"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Quit" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(320, 80)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 2
 texture = ExtResource("2_m405t")
 stretch_mode = 3
+
+[node name="QuitGameLabel" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Quit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 90.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_5ktd1")
+theme_override_font_sizes/font_size = 20
+text = "退出游戏"
+horizontal_alignment = 1
+vertical_alignment = 1

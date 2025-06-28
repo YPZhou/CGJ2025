@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7pyu1tax5g2i"]
+[gd_scene load_steps=5 format=3 uid="uid://o45o73ea34jj"]
 
 [ext_resource type="Texture2D" uid="uid://0bp2131d24ug" path="res://Image/Floor.png" id="1_h175a"]
 [ext_resource type="PackedScene" uid="uid://dgh2j2qw7l7tp" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
@@ -24,7 +24,6 @@ player2Texture = null
 position = Vector2(-1054, 277)
 
 [node name="Player2" parent="." instance=ExtResource("1_xhtwi")]
-modulate = Color(0, 0, 1, 1)
 position = Vector2(2783, 1490)
 PlayerID = 1
 player1Texture = null
