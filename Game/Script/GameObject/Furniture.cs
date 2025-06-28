@@ -8,12 +8,14 @@ public enum Furniture_Status
 {
 	FREE,
 	POSSESS,
+	HOLDUP,
 }
 
 public partial class Furniture : Node2D
 {
 	[Export] public Furniture_Status Status;
 	[Export] Label holdHint;
+	[Export] CollisionShape2D collisionShape;
 
 	[Signal] public delegate void InteractiveEventHandler();
 	[Signal] public delegate void HoldupEventHandler();
@@ -26,6 +28,7 @@ public partial class Furniture : Node2D
 	public override void _Ready()
 	{
 		holdHint.Visible = false;
+		collisionShape.Disabled = false;
 
 		Interactive += OnInteractive;
 		Holdup += OnHoldup;
@@ -69,7 +72,16 @@ public partial class Furniture : Node2D
 
 	public void OnHoldup()
 	{
-		IsHoldup = !IsHoldup;
+		IsHoldup = true;
+		Status = Furniture_Status.HOLDUP;
+		collisionShape.Disabled = true;
+	}
+
+	public void OnPutdown()
+	{
+		IsHoldup = false;
+		Status = Furniture_Status.FREE;
+		collisionShape.Disabled = false;
 	}
 
 	public void OnMove()

@@ -70,9 +70,8 @@ public partial class Player : CharacterBody2D
 
 		furniturePicking.BodyEntered += (body) =>
 		{
-			if (body is Furniture furniture)
+			if (body is Furniture furniture && furniture.Status == Furniture_Status.FREE && status == PlayerStatus.Normal)
 			{
-				GD.Print("靠近", furniture.Name);
 				_faceFurniture = furniture;
 				_faceFurniture.ToggleCanHold(PlayerID);
 			}
@@ -82,7 +81,6 @@ public partial class Player : CharacterBody2D
 		{
 			if (body is Furniture furniture)
 			{
-				GD.Print("离开", furniture.Name);
 				if (_faceFurniture == furniture)
 				{
 					_faceFurniture.ToggleCanHold(PlayerID);
@@ -133,9 +131,22 @@ public partial class Player : CharacterBody2D
 			case PlayerStatus.Normal:
 				if (Input.IsKeyPressed(keys[interactKey]))
 				{
-					aimingStartTime = Time.GetTicksMsec();
-					status = PlayerStatus.Aiming;
-					moveDirection = Vector2.Zero;
+					if (_faceFurniture != null)
+					{
+						_holdupFurniture = _faceFurniture;
+						_faceFurniture = null;
+
+						_holdupFurniture.OnHoldup();
+						status = PlayerStatus.Holding;
+
+						GD.Print("搬运", _holdupFurniture);
+					}
+					else
+					{
+						aimingStartTime = Time.GetTicksMsec();
+						status = PlayerStatus.Aiming;
+						moveDirection = Vector2.Zero;
+					}
 				}
 				else
 				{
@@ -162,6 +173,22 @@ public partial class Player : CharacterBody2D
 
 				break;
 			case PlayerStatus.Holding:
+				if (!Input.IsKeyPressed(keys[interactKey]))
+				{
+					// 放下家具
+					// ...
+					GD.Print("放下", _holdupFurniture);
+
+					_holdupFurniture.OnPutdown();
+					_holdupFurniture = null;
+					status = PlayerStatus.Normal;
+				}
+				else
+				{
+					ProcessMove(keys);
+					_holdupFurniture.Position = Position + new Vector2(0, -100f);
+				}
+
 				break;
 		}
 	}
