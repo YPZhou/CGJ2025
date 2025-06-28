@@ -13,6 +13,7 @@ public partial class Player : CharacterBody2D
 {
 	[Export] PlayerID PlayerID;
 	[Export] Label playerHint;
+	[Export] Sprite2D cursor;
 
 	public FlipFlop flipFlop;
 
@@ -31,6 +32,7 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
 	{
 		moveDirection = Vector2.Zero;
+		cursor.Visible = false;
 
 		if (PlayerID == PlayerID.Player1)
 		{
