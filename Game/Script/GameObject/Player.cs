@@ -35,6 +35,10 @@ public partial class Player : CharacterBody2D
 	Vector2 crosshairPosition;
 	float crosshairAngle = 0f;
 
+	float aimingStartTime;
+	float AimingTime => Time.GetTicksMsec() - aimingStartTime;
+	float aimingThreshold = 100f;
+
 	Dictionary<PlayerID, List<Key>> keyMappings = new()
 	{
 		{ PlayerID.Player1, new List<Key> { Key.W, Key.S, Key.A, Key.D, Key.Space } },
@@ -60,6 +64,7 @@ public partial class Player : CharacterBody2D
 
 		crosshair.Visible = false;
 		crosshairPosition = new Vector2(0, -200f);
+		aimingStartTime = 0f;
 
 		status = PlayerStatus.Normal;
 		moveDirection = Vector2.Zero;
@@ -82,7 +87,7 @@ public partial class Player : CharacterBody2D
 
 		ProcessInput();
 
-		if (status == PlayerStatus.Aiming)
+		if (status == PlayerStatus.Aiming && AimingTime >= aimingThreshold)
 		{
 			crosshair.Visible = true;
 			crosshair.Position = crosshairPosition;
@@ -103,6 +108,7 @@ public partial class Player : CharacterBody2D
 			case PlayerStatus.Normal:
 				if (Input.IsKeyPressed(keys[interactKey]))
 				{
+					aimingStartTime = Time.GetTicksMsec();
 					status = PlayerStatus.Aiming;
 					moveDirection = Vector2.Zero;
 				}
@@ -115,6 +121,13 @@ public partial class Player : CharacterBody2D
 			case PlayerStatus.Aiming:
 				if (!Input.IsKeyPressed(keys[interactKey]))
 				{
+					if (AimingTime >= aimingThreshold)
+					{
+					}
+					else
+					{
+					}
+
 					status = PlayerStatus.Normal;
 				}
 				else
