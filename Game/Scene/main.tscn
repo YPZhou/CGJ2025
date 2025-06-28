@@ -32,8 +32,6 @@ zoom = Vector2(0.2, 0.2)
 
 [node name="Player1" parent="." instance=ExtResource("1_xhtwi")]
 position = Vector2(-2536, 1406)
-player1Texture = null
-player2Texture = null
 
 [node name="Furniture" parent="." instance=ExtResource("2_g6ejq")]
 position = Vector2(-1054, 277)
