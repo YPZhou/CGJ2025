@@ -281,7 +281,8 @@ public partial class Periplaneta : CharacterBody2D
 		if (currentDamage >= MaxHealth)
 		{
 			_periplanetaStates = PeriplanetaStates.Dead;
-			_possessFurniture.Status = Furniture_Status.FREE;
+			if (_possessFurniture != null)
+				_possessFurniture.Status = Furniture_Status.FREE;
 			_isInFurniture = false;
 			moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * 3f; // todo: 从箱子被打出的位移
 
