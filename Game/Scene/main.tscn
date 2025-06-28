@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b2eymyik6mo3o"]
+[gd_scene load_steps=25 format=3 uid="uid://b2eymyik6mo3o"]
 
 [ext_resource type="Script" uid="uid://cbbasc4iewoef" path="res://Script/Scene/MainScene.cs" id="1_e6irg"]
 [ext_resource type="Texture2D" uid="uid://0bp2131d24ug" path="res://Image/Floor.png" id="1_h175a"]
@@ -22,15 +22,19 @@
 [ext_resource type="Texture2D" uid="uid://du2nacbfkqcx4" path="res://Image/KeyEnter3.png" id="18_5xnk5"]
 [ext_resource type="Texture2D" uid="uid://dv8h0fix16upj" path="res://Image/KeyEnter4.png" id="19_6ngyt"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bf81u"]
+size = Vector2(2685, 3660)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uq86q"]
 size = Vector2(5763, 200)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aa3qu"]
 size = Vector2(207, 3581)
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("remainingTimeLabel", "bgmPlayer")]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("remainingTimeLabel", "targetArea", "bgmPlayer")]
 script = ExtResource("1_e6irg")
 remainingTimeLabel = NodePath("CanvasLayer/RemainingTime/Label")
+targetArea = NodePath("TargetArea/Area2D")
 bgmPlayer = NodePath("AudioStreamPlayer")
 bgm = ExtResource("2_uq86q")
 
@@ -38,6 +42,21 @@ bgm = ExtResource("2_uq86q")
 rotation = 1.5708
 scale = Vector2(3, 3)
 texture = ExtResource("1_h175a")
+
+[node name="TargetArea" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.439216)
+rotation = 1.5708
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_h175a")
+
+[node name="Area2D" type="Area2D" parent="TargetArea"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TargetArea/Area2D"]
+position = Vector2(12.5, 5.00011)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_bf81u")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.2, 0.2)
@@ -56,21 +75,10 @@ PlayerID = 1
 position = Vector2(1553, 592)
 
 [node name="Periplaneta" parent="." instance=ExtResource("3_djkur")]
-position = Vector2(524, 123)
-collision_layer = 3
-collision_mask = 3
-AlertDistence = 1000.0
-DangerDistence = 2000.0
-MaxHealth = 15
+position = Vector2(693, -431)
 
 [node name="Periplaneta2" parent="." instance=ExtResource("3_djkur")]
-position = Vector2(-1777, -106)
-collision_layer = 3
-collision_mask = 3
-AlertDistence = 1000.0
-DangerDistence = 2000.0
-CD = 2.0
-MaxHealth = 4
+position = Vector2(-753, -214)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
