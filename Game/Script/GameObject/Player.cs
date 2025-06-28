@@ -26,12 +26,14 @@ public partial class Player : CharacterBody2D
 	[Export] Area2D furniturePicking;
 	[Export] Area2D meleeAttackRange;
 
-	public FlipFlop flipFlop;
+	[Export] PackedScene slippersScene;
 
 	private Furniture _faceFurniture;
 	private Furniture _holdupFurniture;
 
 	PlayerStatus status;
+
+	int slippersCount;
 
 	Vector2 moveDirection;
 	float moveSpeed = 400f;
@@ -115,6 +117,7 @@ public partial class Player : CharacterBody2D
 			}
 		};
 
+		slippersCount = 1;
 		status = PlayerStatus.Normal;
 		moveDirection = Vector2.Zero;
 	}
@@ -192,8 +195,13 @@ public partial class Player : CharacterBody2D
 			case PlayerStatus.Aiming:
 				if (!Input.IsKeyPressed(keys[interactKey]))
 				{
-					if (AimingTime >= aimingThreshold)
+					if (AimingTime >= aimingThreshold && slippersCount > 0)
 					{
+						slippersCount -= 1;
+						var slippers = slippersScene.Instantiate<Slippers>();
+						GetTree().CurrentScene.AddChild(slippers);
+
+						GD.Print(Name, "投掷", slippers.Name);
 					}
 					else
 					{
@@ -205,6 +213,8 @@ public partial class Player : CharacterBody2D
 							meleeFlipFlop.Visible = true;
 							meleeAttackTween = CreateTween();
 							meleeAttackTween.TweenProperty(meleeFlipFlop, "modulate:a", 255f, meleeAttackDuration);
+
+							GD.Print(Name, "挥舞拖鞋");
 						}
 					}
 
