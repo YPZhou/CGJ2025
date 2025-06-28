@@ -78,19 +78,27 @@ public partial class Periplaneta : CharacterBody2D
 			{
 				_targetFurniture = FindNearestFreeFurniture(GetTree().Root);
 				if (_targetFurniture != null)
-                {
-                    _periplanetaStates = PeriplanetaStates.Entering;
-                    return;
-                }
+				{
+					_periplanetaStates = PeriplanetaStates.Entering;
+					return;
+				}
 			}
 
-			float distToPlayer = GlobalPosition.DistanceTo(_player1.GlobalPosition);
-			
-			if (distToPlayer < DangerDistence)
+
+			float distToPlayer1 = GlobalPosition.DistanceTo(_player1.GlobalPosition);
+			float distToPlayer2 = GlobalPosition.DistanceTo(_player2.GlobalPosition);
+
+			float distToPlayer = Mathf.Min(distToPlayer1, distToPlayer2);
+            Vector2 fleeDir = (GlobalPosition - _player1.GlobalPosition).Normalized();
+
+            if (distToPlayer2 < distToPlayer1)
 			{
-				Vector2 fleeDir = (GlobalPosition - _player1.GlobalPosition).Normalized();
+                fleeDir = (GlobalPosition - _player2.GlobalPosition).Normalized();
+            }
+
+            if (distToPlayer < DangerDistence)
+			{
 				moveDirection = fleeDir * DangerSpeed;
-				// GD.Print(Velocity);
 			}
 			else if (distToPlayer < AlertDistence)
 			{
@@ -98,7 +106,6 @@ public partial class Periplaneta : CharacterBody2D
 				{
 					Vector2 wanderDir = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1).Normalized();
 					moveDirection = wanderDir * BaseSpeed;
-					// GD.Print(Velocity);
 				}
 			}
 			else
@@ -128,18 +135,28 @@ public partial class Periplaneta : CharacterBody2D
 
 		if (_periplanetaStates == PeriplanetaStates.Inside)
 		{
-			float distToPlayer = GlobalPosition.DistanceTo(_player1.GlobalPosition);
+
+            float distToPlayer1 = GlobalPosition.DistanceTo(_player1.GlobalPosition);
+            float distToPlayer2 = GlobalPosition.DistanceTo(_player2.GlobalPosition);
+
+            float distToPlayer = Mathf.Min(distToPlayer1, distToPlayer2);
+            Vector2 moveDir = (GlobalPosition - _player1.GlobalPosition).Normalized();
+
+            if (distToPlayer2 < distToPlayer1)
+            {
+                moveDir = (GlobalPosition - _player2.GlobalPosition).Normalized();
+            }
+
 			// 危险距离内：携带家具远离玩家
 			if (distToPlayer < AlertDistence)
 			{
-				Vector2 moveDir = (GlobalPosition - _player1.GlobalPosition).Normalized();
 				moveDirection = moveDir * PossessSpeed;
 			}
 			// 警戒距离外：随机移动家具
 			else
 			{
 				if (GD.Randf() < 0.005f)
-					moveDirection = new Vector2(GD.Randf() * 2 - 1, 0) * PossessSpeed; // 水平移动
+					moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * PossessSpeed; // 水平移动
 			}
 			return;
 		}
@@ -186,44 +203,44 @@ public partial class Periplaneta : CharacterBody2D
 		}
 		return null;
 	}
-    private Furniture FindNearestFreeFurniture(Node rootNode)
-    {
-        // 获取当前节点的全局位置作为基准点
-        Vector2 currentPos = GlobalPosition;
-        Furniture nearestFurniture = null;
-        float minDistanceSq = float.MaxValue; // 使用平方距离避免开方运算
+	private Furniture FindNearestFreeFurniture(Node rootNode)
+	{
+		// 获取当前节点的全局位置作为基准点
+		Vector2 currentPos = GlobalPosition;
+		Furniture nearestFurniture = null;
+		float minDistanceSq = float.MaxValue; // 使用平方距离避免开方运算
 
-        // 局部递归函数实现深度优先遍历
-        void Search(Node node)
-        {
-            // 检查当前节点是否为有效家具
-            if (node is Furniture furniture &&
-                furniture.Status == Furniture_Status.FREE)
-            {
-                // 计算平方距离（性能优化）
-                float distSq = currentPos.DistanceSquaredTo(furniture.GlobalPosition);
+		// 局部递归函数实现深度优先遍历
+		void Search(Node node)
+		{
+			// 检查当前节点是否为有效家具
+			if (node is Furniture furniture &&
+				furniture.Status == Furniture_Status.FREE)
+			{
+				// 计算平方距离（性能优化）
+				float distSq = currentPos.DistanceSquaredTo(furniture.GlobalPosition);
 
-                // 更新最近家具记录
-                if (distSq < minDistanceSq)
-                {
-                    minDistanceSq = distSq;
-                    nearestFurniture = furniture;
-                }
-            }
+				// 更新最近家具记录
+				if (distSq < minDistanceSq)
+				{
+					minDistanceSq = distSq;
+					nearestFurniture = furniture;
+				}
+			}
 
-            // 递归搜索子节点
-            foreach (Node child in node.GetChildren())
-            {
-                Search(child);
-            }
-        }
+			// 递归搜索子节点
+			foreach (Node child in node.GetChildren())
+			{
+				Search(child);
+			}
+		}
 
-        // 从根节点开始搜索
-        Search(rootNode);
-        return nearestFurniture;
-    }
+		// 从根节点开始搜索
+		Search(rootNode);
+		return nearestFurniture;
+	}
 
-    private List<Player> FindAllPlayers(Node startNode)
+	private List<Player> FindAllPlayers(Node startNode)
 	{
 		List<Player> players = new List<Player>();
 		RecursiveSearch(startNode, players);
