@@ -19,6 +19,8 @@ public partial class MainScene : Node
 	int totalFurnitureCount;
 	int furnitureInTargetAreaCount;
 
+	public static bool IsGameWin;
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -61,5 +63,19 @@ public partial class MainScene : Node
 
 		remainingTimeLabel.Text = $"剩余  {RemainingMinutes:D1}:{RemainingSeconds % 60:D2}";
 		furnitureCountLabel.Text = $"整理{totalFurnitureCount - furnitureInTargetAreaCount}件家具";
+
+		if (RemainingSeconds > 0)
+		{
+			if (totalFurnitureCount - furnitureInTargetAreaCount == 0)
+			{
+				IsGameWin = true;
+				GetTree().ChangeSceneToFile("res://Scene/Result.tscn");
+			}
+		}
+		else
+		{
+			IsGameWin = false;
+			GetTree().ChangeSceneToFile("res://Scene/Result.tscn");
+		}
 	}
 }
