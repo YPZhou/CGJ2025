@@ -32,7 +32,8 @@ public partial class Player : CharacterBody2D
 	Vector2 moveDirection;
 	float moveSpeed = 400f;
 
-	bool isAiming;
+	Vector2 crosshairPosition;
+	float crosshairAngle = 0f;
 
 	Dictionary<PlayerID, List<Key>> keyMappings = new()
 	{
@@ -58,6 +59,7 @@ public partial class Player : CharacterBody2D
 		}
 
 		crosshair.Visible = false;
+		crosshairPosition = new Vector2(0, -200f);
 
 		status = PlayerStatus.Normal;
 		moveDirection = Vector2.Zero;
@@ -83,10 +85,12 @@ public partial class Player : CharacterBody2D
 		if (status == PlayerStatus.Aiming)
 		{
 			crosshair.Visible = true;
+			crosshair.Position = crosshairPosition;
 		}
 		else
 		{
 			crosshair.Visible = false;
+			crosshair.Position = Vector2.Zero;
 		}
 	}
 
@@ -152,6 +156,55 @@ public partial class Player : CharacterBody2D
 
 	void ProcessAiming(List<Key> keys)
 	{
+		if (Input.IsKeyPressed(keys[upKey]))
+		{
+			if (Mathf.Sin(crosshairAngle) > 0)
+			{
+				crosshairAngle -= 0.001f;
+			}
+			else
+			{
+				crosshairAngle += 0.001f;
+			}
+		}
+
+		if (Input.IsKeyPressed(keys[downKey]))
+		{
+			if (Mathf.Sin(crosshairAngle) > 0)
+			{
+				crosshairAngle += 0.001f;
+			}
+			else
+			{
+				crosshairAngle -= 0.001f;
+			}
+		}
+
+		if (Input.IsKeyPressed(keys[leftKey]))
+		{
+			if (Mathf.Cos(crosshairAngle) > 0)
+			{
+				crosshairAngle -= 0.001f;
+			}
+			else
+			{
+				crosshairAngle += 0.001f;
+			}
+		}
+
+		if (Input.IsKeyPressed(keys[rightKey]))
+		{
+			if (Mathf.Cos(crosshairAngle) > 0)
+			{
+				crosshairAngle += 0.001f;
+			}
+			else
+			{
+				crosshairAngle -= 0.001f;
+			}
+		}
+
+		crosshairPosition = (Vector2.Up * 200f).Rotated(crosshairAngle);
 	}
 
 	public void Interactive()
