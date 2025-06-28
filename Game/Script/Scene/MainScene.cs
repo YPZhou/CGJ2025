@@ -5,6 +5,7 @@ namespace CGJ2025;
 public partial class MainScene : Node
 {
 	[Export] Label remainingTimeLabel;
+	[Export] public Area2D targetArea;
 	[Export] AudioStreamPlayer bgmPlayer;
 	
 	[Export] AudioStream bgm;
@@ -14,12 +15,35 @@ public partial class MainScene : Node
 	int RemainingSeconds => Mathf.Max(0, 180 - ElapsedSeconds);
 	int RemainingMinutes => RemainingSeconds / 60;
 
+	int furnitureInTargetAreaCount;
+
 	public override void _Ready()
 	{
 		base._Ready();
 
 		gameStartTime = Time.GetTicksMsec();
 		remainingTimeLabel.Text = "3:00";
+
+		furnitureInTargetAreaCount = 0;
+		targetArea.BodyEntered += (body) =>
+		{
+			GD.Print(body.Name, "进入目标区域");
+			if (body is Furniture)
+			{
+				furnitureInTargetAreaCount += 1;
+				GD.Print("已搬运家具", furnitureInTargetAreaCount);
+			}
+		};
+
+		targetArea.BodyExited += (body) =>
+		{
+			GD.Print(body.Name, "离开目标区域");
+			if (body is Furniture)
+			{
+				furnitureInTargetAreaCount -= 1;
+				GD.Print("已搬运家具", furnitureInTargetAreaCount);
+			}
+		};
 
 		bgmPlayer.Stream = bgm;
 		bgmPlayer.Finished += () => bgmPlayer.Play();
