@@ -13,20 +13,25 @@ public partial class Furniture : Node2D
 
 	[Signal] public delegate void InteractiveEventHandler();
 	[Signal] public delegate void HoldupEventHandler();
-	[Signal] public delegate void MoveEventHandler();
+	[Signal] public delegate void HoldupMoveEventHandler();
+	[Signal] public delegate void PeriMoveEventHandler();
+
+	private bool IsHoldup;
 
 	public override void _Ready()
 	{
 		Interactive += OnInteractive;
 		Holdup += OnHoldup;
-		Move += OnMove;
+        HoldupMove += OnMove;
+		PeriMove += OnPeriMove;
 	}
 
 	public override void _ExitTree()
 	{
 		Interactive -= OnInteractive;
 		Holdup -= OnHoldup;
-		Move -= OnMove;
+        HoldupMove -= OnMove;
+		PeriMove -= OnPeriMove;
 	}
 
 	public void OnInteractive()
@@ -41,13 +46,18 @@ public partial class Furniture : Node2D
 		}
 	}
 
-	public void OnMove()
-	{
-
-	}
-
 	public void OnHoldup()
 	{
-
+		IsHoldup = !IsHoldup;
 	}
+
+	public void OnMove()
+	{
+	}
+
+	public void OnPeriMove()
+    {
+        if (IsHoldup)
+            return;
+    }
 }

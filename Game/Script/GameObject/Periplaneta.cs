@@ -17,6 +17,8 @@ public partial class Periplaneta : Node2D
 
 	[Signal] public delegate void KillEventHandler();
 
+	private float _remainCD;
+
 	private Furniture _possessFurniture;
 
 	public override void _PhysicsProcess(double delta)
@@ -39,7 +41,7 @@ public partial class Periplaneta : Node2D
 	public void PossessMove()
 	{
 		// todo
-		_possessFurniture.EmitSignal(Furniture.SignalName.Move);
+		_possessFurniture.EmitSignal(Furniture.SignalName.PeriMove);
 	}
 
 }
