@@ -74,7 +74,7 @@ vertical_alignment = 1
 
 [node name="FurniturePickingArea" type="Area2D" parent="."]
 collision_layer = 2
-collision_mask = 2
+collision_mask = 18
 
 [node name="FurniturePickingCollisionShape" type="CollisionShape2D" parent="FurniturePickingArea"]
 shape = SubResource("CircleShape2D_78ywy")
