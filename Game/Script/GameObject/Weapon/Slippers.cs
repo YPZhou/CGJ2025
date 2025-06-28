@@ -30,11 +30,21 @@ public partial class Slippers : CharacterBody2D
 		{
 			MoveAndSlide();
 
-			if (GetSlideCollisionCount() > 0)
+			var collisionCount = GetSlideCollisionCount();
+			if (collisionCount > 0)
 			{
 				Velocity = Vector2.Zero;
 
-				GD.Print(Name, "碰撞", (GetLastSlideCollision().GetCollider() as Node).Name);
+				for (var i = 0; i < collisionCount; i++)
+				{
+					var collision = GetSlideCollision(i);
+					if (collision.GetCollider() is Periplaneta periplaneta)
+					{
+						periplaneta.OnDamage();
+					}
+
+					GD.Print(Name, "碰撞", (collision.GetCollider() as Node).Name);
+				}
 			}
 		}
 		else

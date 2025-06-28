@@ -121,6 +121,7 @@ public partial class Player : CharacterBody2D
 		{
 			if (body is Periplaneta periplaneta)
 			{
+				periplaneta.OnDamage();
 				GD.Print(Name, "命中", periplaneta.Name);
 			}
 		};
