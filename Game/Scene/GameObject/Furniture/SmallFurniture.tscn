@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://ceoc7n28xwffs"]
+
+[ext_resource type="Script" uid="uid://mdwytli87lb5" path="res://Script/GameObject/Furniture.cs" id="1_a3345"]
+[ext_resource type="Texture2D" uid="uid://daj2g24xoerfv" path="res://Image/Chair.png" id="1_prmdo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_prmdo"]
+radius = 39.8121
+
+[node name="SmallFurniture" type="CharacterBody2D" node_paths=PackedStringArray("holdHint")]
+scale = Vector2(2, 2)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_a3345")
+holdHint = NodePath("HoldHint")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_prmdo")
+
+[node name="FurnitureSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_prmdo")
+
+[node name="HoldHint" type="Label" parent="."]
+offset_left = -41.0
+offset_top = -90.0
+offset_right = -1.0
+offset_bottom = -67.0
+scale = Vector2(2, 2)
+text = "搬运"
+horizontal_alignment = 1
+vertical_alignment = 1

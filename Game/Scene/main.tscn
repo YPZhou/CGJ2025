@@ -1,12 +1,14 @@
-[gd_scene load_steps=25 format=3 uid="uid://b2eymyik6mo3o"]
+[gd_scene load_steps=27 format=3 uid="uid://b2eymyik6mo3o"]
 
 [ext_resource type="Script" uid="uid://cbbasc4iewoef" path="res://Script/Scene/MainScene.cs" id="1_e6irg"]
 [ext_resource type="Texture2D" uid="uid://0bp2131d24ug" path="res://Image/Floor.png" id="1_h175a"]
 [ext_resource type="PackedScene" uid="uid://d32cfx4uh1ep8" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
-[ext_resource type="PackedScene" uid="uid://68kwtxkojgcj" path="res://Scene/GameObject/furniture.tscn" id="2_g6ejq"]
+[ext_resource type="PackedScene" uid="uid://68kwtxkojgcj" path="res://Scene/GameObject/Furniture/furniture.tscn" id="2_g6ejq"]
 [ext_resource type="AudioStream" uid="uid://yukyfyfvxe2i" path="res://Sound/BGM.mp3" id="2_uq86q"]
 [ext_resource type="PackedScene" uid="uid://1y6hb31hhj0x" path="res://Scene/GameObject/periplaneta.tscn" id="3_djkur"]
 [ext_resource type="Texture2D" uid="uid://54ifojalea4u" path="res://Image/KeyW.png" id="5_hmjy8"]
+[ext_resource type="PackedScene" uid="uid://ceoc7n28xwffs" path="res://Scene/GameObject/Furniture/SmallFurniture.tscn" id="6_aa3qu"]
+[ext_resource type="PackedScene" uid="uid://busslg8lng1gs" path="res://Scene/GameObject/Furniture/LargeFurniture.tscn" id="6_bf81u"]
 [ext_resource type="Texture2D" uid="uid://cnaadm33rwkux" path="res://Image/KeyS.png" id="6_e6irg"]
 [ext_resource type="Texture2D" uid="uid://slmdk0xl1eot" path="res://Image/KeyA.png" id="7_uq86q"]
 [ext_resource type="Texture2D" uid="uid://c22laa83n2h6k" path="res://Image/KeyD.png" id="8_aa3qu"]
@@ -56,7 +58,6 @@ collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TargetArea/Area2D"]
 position = Vector2(12.5, 5.00011)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_bf81u")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -75,17 +76,17 @@ PlayerID = 1
 [node name="Furniture2" parent="." instance=ExtResource("2_g6ejq")]
 position = Vector2(1553, 592)
 
-[node name="Furniture3" parent="." instance=ExtResource("2_g6ejq")]
-position = Vector2(-317, 1210)
+[node name="LargeFurniture" parent="." instance=ExtResource("6_bf81u")]
+position = Vector2(756, 967)
 
-[node name="Furniture4" parent="." instance=ExtResource("2_g6ejq")]
-position = Vector2(673, 1114)
+[node name="LargeFurniture2" parent="." instance=ExtResource("6_bf81u")]
+position = Vector2(-482, 1118)
 
-[node name="Furniture5" parent="." instance=ExtResource("2_g6ejq")]
-position = Vector2(1486, -606)
+[node name="SmallFurniture" parent="." instance=ExtResource("6_aa3qu")]
+position = Vector2(-1805, -979)
 
-[node name="Furniture6" parent="." instance=ExtResource("2_g6ejq")]
-position = Vector2(-2265, -1053)
+[node name="SmallFurniture2" parent="." instance=ExtResource("6_aa3qu")]
+position = Vector2(1457, -717)
 
 [node name="Periplaneta" parent="." instance=ExtResource("3_djkur")]
 position = Vector2(693, -431)
