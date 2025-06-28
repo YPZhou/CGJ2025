@@ -76,10 +76,12 @@ public partial class Periplaneta : CharacterBody2D
 			_remainCD -= (float)delta;
 			if (_remainCD <= 0)
 			{
-				_periplanetaStates = PeriplanetaStates.Entering;
-				_targetFurniture = FindFurnitureInScene(GetTree().Root);
-
-				return;
+				_targetFurniture = FindNearestFreeFurniture(GetTree().Root);
+				if (_targetFurniture != null)
+                {
+                    _periplanetaStates = PeriplanetaStates.Entering;
+                    return;
+                }
 			}
 
 			float distToPlayer = GlobalPosition.DistanceTo(_player1.GlobalPosition);
@@ -117,6 +119,7 @@ public partial class Periplaneta : CharacterBody2D
 			{
 				_isInFurniture = true;
 				_possessFurniture = _targetFurniture;
+				_possessFurniture.Status = Furniture_Status.POSSESS;
 				_periplanetaStates = PeriplanetaStates.Inside;
 				return;
 			}
@@ -183,8 +186,44 @@ public partial class Periplaneta : CharacterBody2D
 		}
 		return null;
 	}
+    private Furniture FindNearestFreeFurniture(Node rootNode)
+    {
+        // 获取当前节点的全局位置作为基准点
+        Vector2 currentPos = GlobalPosition;
+        Furniture nearestFurniture = null;
+        float minDistanceSq = float.MaxValue; // 使用平方距离避免开方运算
 
-	private List<Player> FindAllPlayers(Node startNode)
+        // 局部递归函数实现深度优先遍历
+        void Search(Node node)
+        {
+            // 检查当前节点是否为有效家具
+            if (node is Furniture furniture &&
+                furniture.Status == Furniture_Status.FREE)
+            {
+                // 计算平方距离（性能优化）
+                float distSq = currentPos.DistanceSquaredTo(furniture.GlobalPosition);
+
+                // 更新最近家具记录
+                if (distSq < minDistanceSq)
+                {
+                    minDistanceSq = distSq;
+                    nearestFurniture = furniture;
+                }
+            }
+
+            // 递归搜索子节点
+            foreach (Node child in node.GetChildren())
+            {
+                Search(child);
+            }
+        }
+
+        // 从根节点开始搜索
+        Search(rootNode);
+        return nearestFurniture;
+    }
+
+    private List<Player> FindAllPlayers(Node startNode)
 	{
 		List<Player> players = new List<Player>();
 		RecursiveSearch(startNode, players);
@@ -220,11 +259,14 @@ public partial class Periplaneta : CharacterBody2D
 		if (currentDamage >= MaxHealth)
 		{
 			_periplanetaStates = PeriplanetaStates.Dead;
+			_possessFurniture.Status = Furniture_Status.FREE;
+
 			return;
 		}
 		if (currentHit >= MaxHit && _periplanetaStates == PeriplanetaStates.Inside)
 		{
 			_periplanetaStates = PeriplanetaStates.Outside;
+			_possessFurniture.Status = Furniture_Status.FREE;
 			_isInFurniture = false;
 			_remainCD = CD;
 			currentHit = 0;

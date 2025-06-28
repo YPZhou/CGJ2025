@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bqyfo"]
 size = Vector2(123, 124)
 
-[node name="Furniture" type="StaticBody2D" node_paths=PackedStringArray("holdHint", "collisionShape")]
+[node name="Furniture" type="StaticBody2D"]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_bqyfo")
