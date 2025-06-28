@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://pbkrpth7c0j8"]
+[gd_scene load_steps=6 format=3 uid="uid://pbkrpth7c0j8"]
 
 [ext_resource type="Script" uid="uid://cmg88brs637f8" path="res://Script/GameObject/Player.cs" id="1_006tn"]
-[ext_resource type="PackedScene" uid="uid://mnkax4hxm58q" path="res://Scene/GameObject/Weapon/Slippers.tscn" id="2_3kjfs"]
 [ext_resource type="Texture2D" uid="uid://ph2bw0muq4c5" path="res://icon.svg" id="2_78ywy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_006tn"]
@@ -18,10 +17,6 @@ script = ExtResource("1_006tn")
 playerHint = NodePath("PlayerHint")
 slippersCountHint = NodePath("SlippersCount")
 crosshair = NodePath("CrosshairSprite")
-meleeFlipFlop = NodePath("FlipFlopSprite")
-furniturePicking = NodePath("FurniturePickingArea")
-meleeAttackRange = NodePath("MeleeAttackArea")
-slippersScene = ExtResource("2_3kjfs")
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_78ywy")

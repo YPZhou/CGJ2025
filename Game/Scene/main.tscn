@@ -26,6 +26,7 @@ position = Vector2(-1054, 277)
 modulate = Color(0, 0, 1, 1)
 position = Vector2(2783, 1490)
 PlayerID = 1
+slippersScene = null
 
 [node name="Furniture2" parent="." instance=ExtResource("2_g6ejq")]
 position = Vector2(1553, 592)
