@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://calrren4uayvs"]
+[gd_scene load_steps=4 format=3 uid="uid://calrren4uayvs"]
 
 [ext_resource type="PackedScene" uid="uid://pbkrpth7c0j8" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
 [ext_resource type="PackedScene" uid="uid://csjxoa7y7g1d3" path="res://Scene/GameObject/furniture.tscn" id="2_g6ejq"]
+[ext_resource type="PackedScene" uid="uid://1y6hb31hhj0x" path="res://Scene/GameObject/periplaneta.tscn" id="3_djkur"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -19,3 +20,6 @@ PlayerID = 1
 
 [node name="Furniture2" parent="." instance=ExtResource("2_g6ejq")]
 position = Vector2(746, 192)
+
+[node name="Periplaneta" parent="." instance=ExtResource("3_djkur")]
+position = Vector2(211, 436)
