@@ -228,7 +228,7 @@ public partial class Periplaneta : CharacterBody2D
 	{
 		++currentDamage;
 
-		if (currentDamage >= MaxHealth)
+		if (currentDamage >= MaxHealth && _periplanetaStates != PeriplanetaStates.Dead)
 		{
 			_periplanetaStates = PeriplanetaStates.Dead;
 			PeriplanetaCount -= 1;
