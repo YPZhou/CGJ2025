@@ -43,6 +43,7 @@ public partial class Player : CharacterBody2D
 	PlayerStatus status;
 
 	int slippersCount;
+	Vector2 playerHintOriginalPosition;
 
 	Vector2 moveDirection;
 	float moveSpeed = 400f;
@@ -72,6 +73,7 @@ public partial class Player : CharacterBody2D
 
 	public override void _Ready()
 	{
+		playerHintOriginalPosition = playerHint.Position;
 		if (PlayerID == PlayerID.Player1)
 		{
 			playerHint.Text = "1P";
@@ -159,6 +161,7 @@ public partial class Player : CharacterBody2D
 		base._Process(delta);
 
 		slippersCountHint.Text = slippersCount.ToString();
+		playerHint.Position = new Vector2(playerHintOriginalPosition.X, playerHintOriginalPosition.Y + Mathf.Sin(Time.GetTicksMsec() / 80f) * 10f);
 
 		ProcessInput();
 
