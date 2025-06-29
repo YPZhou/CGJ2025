@@ -14,16 +14,18 @@ public enum PeriplanetaStates
 
 public partial class Periplaneta : CharacterBody2D
 {
-	[Export] public float AlertDistence = 7f;
-	[Export] public float DangerDistence = 3f;
+	[Export] public float AlertDistence = 700f;
+	[Export] public float DangerDistence = 300f;
 	[Export] public float CD = 5f;
 	[Export] public float BaseSpeed = 500f;
 	[Export] public float DangerSpeed = 800f;
-	[Export] public float PossessSpeed = 50f;
-	[Export] public int   MaxHealth = 15;
+	[Export] public float PossessSpeed = 300f;
+	[Export] public int   MaxHealth = 9;
 	[Export] public int   MaxHit = 3;
 
 	[Signal] public delegate void DamageEventHandler();
+
+	private Sprite2D _sprite;
 
 	public bool _isInFurniture = false;
 	public Player _player1;
@@ -36,11 +38,16 @@ public partial class Periplaneta : CharacterBody2D
 	public PeriplanetaStates _periplanetaStates;
 
 	public Vector2 moveDirection;
+	public float _rotation;
 
+	private bool isDead = false;
+	
 	public static int PeriplanetaCount;
 
 	public override void _Ready()
 	{
+		_sprite = GetNode<Sprite2D>("Sprite2D");
+
 		List<Player> players = FindAllPlayers(GetTree().Root);
 
 		if (players.Count >= 2)
@@ -71,6 +78,16 @@ public partial class Periplaneta : CharacterBody2D
 		PeriplanetaCount += 1;
 
 	}
+
+	private void SetRotationToDirection(Vector2 dir)
+	{
+		if (dir == Vector2.Zero) return;
+		
+		dir = -dir;
+
+		_rotation = dir.Angle() - Mathf.Pi / 2f;
+	}
+
 	public override void _Process(double delta)
 	{
 		if (_periplanetaStates == PeriplanetaStates.Outside)
@@ -86,7 +103,6 @@ public partial class Periplaneta : CharacterBody2D
 				}
 			}
 
-
 			float distToPlayer1 = GlobalPosition.DistanceTo(_player1.GlobalPosition);
 			float distToPlayer2 = GlobalPosition.DistanceTo(_player2.GlobalPosition);
 
@@ -101,6 +117,7 @@ public partial class Periplaneta : CharacterBody2D
 			if (distToPlayer < DangerDistence)
 			{
 				moveDirection = fleeDir * DangerSpeed;
+				SetRotationToDirection(fleeDir);
 			}
 			else if (distToPlayer < AlertDistence)
 			{
@@ -108,6 +125,7 @@ public partial class Periplaneta : CharacterBody2D
 				{
 					Vector2 wanderDir = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1).Normalized();
 					moveDirection = wanderDir * BaseSpeed;
+					SetRotationToDirection(fleeDir);
 				}
 			}
 			else
@@ -121,7 +139,8 @@ public partial class Periplaneta : CharacterBody2D
 		if (_periplanetaStates == PeriplanetaStates.Entering)
 		{
 			Vector2 dir = (_targetFurniture.GlobalPosition - GlobalPosition).Normalized();
-			moveDirection = dir * BaseSpeed;
+			SetRotationToDirection(dir);
+			moveDirection = dir * DangerSpeed;
 
 			float distToFurniture = GlobalPosition.DistanceTo(_targetFurniture.GlobalPosition);
 			if (distToFurniture < 5f)
@@ -132,6 +151,8 @@ public partial class Periplaneta : CharacterBody2D
 					_possessFurniture = _targetFurniture;
 					_possessFurniture.Status = Furniture_Status.POSSESS;
 					_periplanetaStates = PeriplanetaStates.Inside;
+					_sprite.Modulate = new Color(1, 1, 1, 0);
+
 					return;
 				}
 				else
@@ -182,7 +203,6 @@ public partial class Periplaneta : CharacterBody2D
 
 		}
 	}
-	private bool isDead = false;
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -198,6 +218,8 @@ public partial class Periplaneta : CharacterBody2D
 			else
 			{
 				Velocity = moveDirection;
+
+				Rotation = _rotation;
 
 				MoveAndSlide();
 			}
@@ -286,7 +308,6 @@ public partial class Periplaneta : CharacterBody2D
 	public void OnDamage()
 	{
 		++currentDamage;
-		_remainCD = 0;
 
 		if (currentDamage >= MaxHealth)
 		{
@@ -296,16 +317,22 @@ public partial class Periplaneta : CharacterBody2D
 			if (_possessFurniture != null)
 				_possessFurniture.Status = Furniture_Status.FREE;
 			_isInFurniture = false;
-			moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * 3f; // todo: 从箱子被打出的位移
+			_sprite.Modulate = new Color(1, 1, 1, 1);
+			moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * DangerSpeed; // todo: 从箱子被打出的位移
 
+			SetRotationToDirection(moveDirection);
 			MoveAndSlide();
+			moveDirection = Vector2.Zero;
 			return;
 		}
 
 		if (_periplanetaStates == PeriplanetaStates.Outside)
 		{
+			_remainCD = 0;
+			_periplanetaStates = PeriplanetaStates.Entering;
 			return;
 		}
+
 		if (_periplanetaStates == PeriplanetaStates.Entering)
 		{
 			return;
@@ -313,16 +340,20 @@ public partial class Periplaneta : CharacterBody2D
 		if (_periplanetaStates == PeriplanetaStates.Inside)
 		{
 			++currentHit;
-			GD.Print(currentHit);
-			GD.Print(currentDamage);
+
 			if (currentHit >= MaxHit)
 			{
 				_periplanetaStates = PeriplanetaStates.Outside;
 				_possessFurniture.Status = Furniture_Status.FREE;
+				_sprite.Modulate = new Color(1, 1, 1, 1);
 				_isInFurniture = false;
-				moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * 3f; // todo: 从箱子被打出的位移
+				moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * DangerSpeed; // todo: 从箱子被打出的位移
 				_remainCD = CD;
 				currentHit = 0;
+				SetRotationToDirection(moveDirection);
+
+				MoveAndSlide();
+				moveDirection = Vector2.Zero;
 			}
 		}
 	}
