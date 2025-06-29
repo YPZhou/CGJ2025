@@ -137,8 +137,13 @@ public partial class Player : CharacterBody2D
 			{
 				periplaneta.OnDamage();
 				GD.Print(Name, "命中", periplaneta.Name);
-			}
-		};
+            }
+            if (body is Furniture furniture)
+            {
+                furniture.OnDamage();
+                GD.Print(Name, "命中", furniture.Name);
+            }
+        };
 
 		slippersCount = 1;
 		status = PlayerStatus.Normal;
