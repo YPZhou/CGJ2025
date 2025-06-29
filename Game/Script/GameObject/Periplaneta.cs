@@ -95,7 +95,7 @@ public partial class Periplaneta : CharacterBody2D
 			{
 				Velocity = moveDirection;
 
-				Rotation = Mathf.Lerp(Rotation, _rotation, 0.8f);
+				Rotation = _rotation;
 
 				MoveAndSlide();
 			}
@@ -168,7 +168,7 @@ public partial class Periplaneta : CharacterBody2D
 				return;
 			}
 
-			if (distToFurniture < stepDistance)
+			if (distToFurniture < stepDistance * 2)
 			{
 				if (_targetFurniture.Status == Furniture_Status.FREE)
 				{
