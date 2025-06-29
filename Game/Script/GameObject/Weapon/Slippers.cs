@@ -10,7 +10,7 @@ public enum SlippersStatus
 
 public partial class Slippers : CharacterBody2D
 {
-	[Export] float FlySpeed = 1000f;
+	[Export] float FlySpeed = 2000f;
 	[Export] CollisionShape2D collisionShape;
 
 	[Export] AudioStreamPlayer soundPlayer;

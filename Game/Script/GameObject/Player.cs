@@ -46,7 +46,7 @@ public partial class Player : CharacterBody2D
 	Vector2 playerHintOriginalPosition;
 
 	Vector2 moveDirection;
-	float moveSpeed = 400f;
+	float moveSpeed = 600f;
 
 	Vector2 crosshairPosition;
 	float crosshairAngle = 0f;
@@ -327,15 +327,17 @@ public partial class Player : CharacterBody2D
 
 	void ProcessAiming(List<Key> keys)
 	{
+		var crosshairRotateSpeed = 0.0015f;
+
 		if (Input.IsKeyPressed(keys[upKey]))
 		{
 			if (Mathf.Sin(crosshairAngle) > 0)
 			{
-				crosshairAngle -= 0.001f;
+				crosshairAngle -= crosshairRotateSpeed;
 			}
 			else
 			{
-				crosshairAngle += 0.001f;
+				crosshairAngle += crosshairRotateSpeed;
 			}
 		}
 
@@ -343,11 +345,11 @@ public partial class Player : CharacterBody2D
 		{
 			if (Mathf.Sin(crosshairAngle) > 0)
 			{
-				crosshairAngle += 0.001f;
+				crosshairAngle += crosshairRotateSpeed;
 			}
 			else
 			{
-				crosshairAngle -= 0.001f;
+				crosshairAngle -= crosshairRotateSpeed;
 			}
 		}
 
@@ -355,11 +357,11 @@ public partial class Player : CharacterBody2D
 		{
 			if (Mathf.Cos(crosshairAngle) > 0)
 			{
-				crosshairAngle -= 0.001f;
+				crosshairAngle -= crosshairRotateSpeed;
 			}
 			else
 			{
-				crosshairAngle += 0.001f;
+				crosshairAngle += crosshairRotateSpeed;
 			}
 		}
 
@@ -367,11 +369,11 @@ public partial class Player : CharacterBody2D
 		{
 			if (Mathf.Cos(crosshairAngle) > 0)
 			{
-				crosshairAngle += 0.001f;
+				crosshairAngle += crosshairRotateSpeed;
 			}
 			else
 			{
-				crosshairAngle -= 0.001f;
+				crosshairAngle -= crosshairRotateSpeed;
 			}
 		}
 

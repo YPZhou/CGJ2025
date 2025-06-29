@@ -11,6 +11,7 @@ scale = Vector2(2, 2)
 collision_layer = 52
 collision_mask = 52
 script = ExtResource("1_ygplf")
+PossessSpeed = 750.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_ygplf")

@@ -89,6 +89,12 @@ position = Vector2(693, -431)
 [node name="Periplaneta2" parent="." instance=ExtResource("3_djkur")]
 position = Vector2(-753, -214)
 
+[node name="Periplaneta3" parent="." instance=ExtResource("3_djkur")]
+position = Vector2(-609, -1178)
+
+[node name="Periplaneta4" parent="." instance=ExtResource("3_djkur")]
+position = Vector2(1123, -1209)
+
 [node name="Player1" parent="." instance=ExtResource("1_xhtwi")]
 position = Vector2(-2536, 1406)
 
