@@ -6,6 +6,7 @@ public partial class MainScene : Node
 {
 	[Export] Label remainingTimeLabel;
 	[Export] Label furnitureCountLabel;
+	[Export] Label periplanetaCountLabel;
 	[Export] public Area2D targetArea;
 	[Export] AudioStreamPlayer bgmPlayer;
 	
@@ -30,6 +31,7 @@ public partial class MainScene : Node
 		gameStartTime = Time.GetTicksMsec();
 		remainingTimeLabel.Text = "剩余  3:00";
 		furnitureCountLabel.Text = $"夺回{totalFurnitureCount}件家具";
+		periplanetaCountLabel.Text = $"或 消灭{Periplaneta.PeriplanetaCount}只蟑螂";
 
 		furnitureInTargetAreaCount = 0;
 		targetArea.BodyEntered += (body) =>
@@ -63,6 +65,7 @@ public partial class MainScene : Node
 
 		remainingTimeLabel.Text = $"剩余  {RemainingMinutes:D1}:{RemainingSeconds % 60:D2}";
 		furnitureCountLabel.Text = $"夺回{totalFurnitureCount - furnitureInTargetAreaCount}件家具";
+		periplanetaCountLabel.Text = $"或 消灭{Periplaneta.PeriplanetaCount}只蟑螂";
 
 		if (RemainingSeconds > 0)
 		{
