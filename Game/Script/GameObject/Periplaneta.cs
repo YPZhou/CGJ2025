@@ -144,7 +144,7 @@ public partial class Periplaneta : CharacterBody2D
 				{
 					Vector2 wanderDir = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1).Normalized();
 					moveDirection = wanderDir * BaseSpeed;
-					SetRotationToDirection(fleeDir);
+					SetRotationToDirection(wanderDir);
 				}
 			}
 			else
