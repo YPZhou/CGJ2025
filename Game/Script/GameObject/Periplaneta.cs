@@ -249,7 +249,7 @@ public partial class Periplaneta : CharacterBody2D
 			moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * DangerSpeed; // todo: 从箱子被打出的位移
 
 			SetRotationToDirection(moveDirection);
-			Rotation = Mathf.Lerp(Rotation, _rotation, 0.2f);
+			Rotation = _rotation;
 			Velocity = moveDirection;
 
 			MoveAndSlide();
@@ -284,7 +284,7 @@ public partial class Periplaneta : CharacterBody2D
 				currentHit = 0;
 				SetRotationToDirection(moveDirection);
 				Velocity = moveDirection;
-				Rotation = Mathf.Lerp(Rotation, _rotation, 0.2f);
+				Rotation = _rotation;
 
 				MoveAndSlide();
 				moveDirection = Vector2.Zero;
