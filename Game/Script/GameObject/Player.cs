@@ -162,6 +162,14 @@ public partial class Player : CharacterBody2D
 
 		slippersCountHint.Text = slippersCount.ToString();
 		playerHint.Position = new Vector2(playerHintOriginalPosition.X, playerHintOriginalPosition.Y + Mathf.Sin(Time.GetTicksMsec() / 80f) * 10f);
+		if (moveDirection != Vector2.Zero)
+		{
+			Rotation = Mathf.Sin(Time.GetTicksMsec() / 100f) * float.Pi * 0.03f;
+		}
+		else
+		{
+			Rotation = 0f;
+		}
 
 		ProcessInput();
 
