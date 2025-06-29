@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://cbbasc4iewoef" path="res://Script/Scene/MainScene.cs" id="1_e6irg"]
 [ext_resource type="Texture2D" uid="uid://0bp2131d24ug" path="res://Image/Floor.png" id="1_h175a"]
 [ext_resource type="PackedScene" uid="uid://d32cfx4uh1ep8" path="res://Scene/GameObject/Player.tscn" id="1_xhtwi"]
-[ext_resource type="PackedScene" uid="uid://68kwtxkojgcj" path="res://Scene/GameObject/Furniture/furniture.tscn" id="2_g6ejq"]
 [ext_resource type="AudioStream" uid="uid://yukyfyfvxe2i" path="res://Sound/BGM.mp3" id="2_uq86q"]
 [ext_resource type="PackedScene" uid="uid://1y6hb31hhj0x" path="res://Scene/GameObject/periplaneta.tscn" id="3_djkur"]
+[ext_resource type="PackedScene" uid="uid://31ejw0sfsiqu" path="res://Scene/GameObject/Furniture/LargestFurniture.tscn" id="5_bf81u"]
 [ext_resource type="Texture2D" uid="uid://54ifojalea4u" path="res://Image/KeyW.png" id="5_hmjy8"]
 [ext_resource type="PackedScene" uid="uid://ceoc7n28xwffs" path="res://Scene/GameObject/Furniture/SmallFurniture.tscn" id="6_aa3qu"]
 [ext_resource type="PackedScene" uid="uid://busslg8lng1gs" path="res://Scene/GameObject/Furniture/LargeFurniture.tscn" id="6_bf81u"]
@@ -65,18 +65,11 @@ shape = SubResource("RectangleShape2D_bf81u")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.2, 0.2)
 
-[node name="Player1" parent="." instance=ExtResource("1_xhtwi")]
-position = Vector2(-2536, 1406)
+[node name="LargestFurniture" parent="." instance=ExtResource("5_bf81u")]
+position = Vector2(-1356, 358)
 
-[node name="Furniture" parent="." instance=ExtResource("2_g6ejq")]
-position = Vector2(-1054, 277)
-
-[node name="Player2" parent="." instance=ExtResource("1_xhtwi")]
-position = Vector2(2783, 1490)
-PlayerID = 1
-
-[node name="Furniture2" parent="." instance=ExtResource("2_g6ejq")]
-position = Vector2(1553, 592)
+[node name="LargestFurniture2" parent="." instance=ExtResource("5_bf81u")]
+position = Vector2(1484, 571)
 
 [node name="LargeFurniture" parent="." instance=ExtResource("6_bf81u")]
 position = Vector2(756, 967)
@@ -95,6 +88,13 @@ position = Vector2(693, -431)
 
 [node name="Periplaneta2" parent="." instance=ExtResource("3_djkur")]
 position = Vector2(-753, -214)
+
+[node name="Player1" parent="." instance=ExtResource("1_xhtwi")]
+position = Vector2(-2536, 1406)
+
+[node name="Player2" parent="." instance=ExtResource("1_xhtwi")]
+position = Vector2(2783, 1490)
+PlayerID = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
