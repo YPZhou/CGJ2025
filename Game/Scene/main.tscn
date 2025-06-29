@@ -25,13 +25,13 @@
 [ext_resource type="Texture2D" uid="uid://dv8h0fix16upj" path="res://Image/KeyEnter4.png" id="19_6ngyt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bf81u"]
-size = Vector2(2685, 3660)
+size = Vector2(3177.52, 4230)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uq86q"]
-size = Vector2(5763, 200)
+size = Vector2(8008, 213)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aa3qu"]
-size = Vector2(207, 3581)
+size = Vector2(241.5, 4902)
 
 [node name="Node2D" type="Node2D" node_paths=PackedStringArray("remainingTimeLabel", "furnitureCountLabel", "periplanetaCountLabel", "targetArea", "bgmPlayer")]
 script = ExtResource("1_e6irg")
@@ -50,7 +50,7 @@ texture = ExtResource("1_h175a")
 [node name="TargetArea" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.439216)
 rotation = 1.5708
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_h175a")
 
 [node name="Area2D" type="Area2D" parent="TargetArea"]
@@ -58,7 +58,8 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TargetArea/Area2D"]
-position = Vector2(12.5, 5.00011)
+position = Vector2(11.2499, -27.5032)
+scale = Vector2(0.999999, 0.999999)
 shape = SubResource("RectangleShape2D_bf81u")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -362,12 +363,12 @@ vertical_alignment = 1
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="BorderUp" type="StaticBody2D" parent="."]
-position = Vector2(0, -1628)
+position = Vector2(0, -2233)
 collision_layer = 49
 collision_mask = 49
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderUp"]
-position = Vector2(-1, -73)
+position = Vector2(-3, -111.5)
 shape = SubResource("RectangleShape2D_uq86q")
 
 [node name="BorderLeft" type="StaticBody2D" parent="."]
@@ -376,16 +377,16 @@ collision_layer = 49
 collision_mask = 49
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderLeft"]
-position = Vector2(-54.5, -14.5)
+position = Vector2(-1204.25, -14.5)
 shape = SubResource("RectangleShape2D_aa3qu")
 
 [node name="BorderRight" type="StaticBody2D" parent="."]
-position = Vector2(3000, 6)
+position = Vector2(3017, 20)
 collision_layer = 49
 collision_mask = 49
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderRight"]
-position = Vector2(-54.5, -14.5)
+position = Vector2(1095, -8)
 shape = SubResource("RectangleShape2D_aa3qu")
 
 [node name="BorderDown" type="StaticBody2D" parent="."]
@@ -394,5 +395,5 @@ collision_layer = 49
 collision_mask = 49
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderDown"]
-position = Vector2(-1, -73)
+position = Vector2(-4, 586)
 shape = SubResource("RectangleShape2D_uq86q")
