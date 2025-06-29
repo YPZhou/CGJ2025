@@ -44,21 +44,17 @@ public partial class Slippers : CharacterBody2D
 					var collision = GetSlideCollision(i);
 					if (collision.GetCollider() is Periplaneta periplaneta)
 					{
-						soundPlayer.Play();
 						periplaneta.OnDamage();
 					}
 					if (collision.GetCollider() is Furniture furniture)
 					{
-						if (furniture.PeriInside != null)
-						{
-							soundPlayer.Play();
-						}
-
 						furniture.OnDamage();
 					}
 
 					GD.Print(Name, "碰撞", (collision.GetCollider() as Node).Name);
 				}
+
+				soundPlayer.Play();
 			}
 		}
 		else
