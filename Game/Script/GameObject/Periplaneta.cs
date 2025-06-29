@@ -27,8 +27,6 @@ public partial class Periplaneta : CharacterBody2D
 	[Signal] public delegate void DamageEventHandler();
 
 	private Sprite2D _sprite;
-	private CollisionShape2D _collisionShape;
-
 
 	public bool _isInFurniture = false;
 	public Player _player1;
@@ -50,7 +48,6 @@ public partial class Periplaneta : CharacterBody2D
 	public override void _Ready()
 	{
 		_sprite = GetNode<Sprite2D>("Sprite2D");
-		_collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
 
 		List<Player> players = FindAllPlayers(GetTree().Root);
 
@@ -279,7 +276,8 @@ public partial class Periplaneta : CharacterBody2D
 				_possessFurniture.UpdatePeriInside(null);
 				_possessFurniture = null;
 				_sprite.Modulate = new Color(1, 1, 1, 1);
-				_collisionShape.Disabled = false;
+				CollisionLayer = 52;
+				CollisionMask = 52;
 				_isInFurniture = false;
 				moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * DangerSpeed; // todo: 从箱子被打出的位移
 				_remainCD = CD;
