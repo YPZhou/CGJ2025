@@ -65,13 +65,6 @@ shape = SubResource("RectangleShape2D_bf81u")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.2, 0.2)
 
-[node name="Player1" parent="." instance=ExtResource("1_xhtwi")]
-position = Vector2(-2536, 1406)
-
-[node name="Player2" parent="." instance=ExtResource("1_xhtwi")]
-position = Vector2(2783, 1490)
-PlayerID = 1
-
 [node name="LargestFurniture" parent="." instance=ExtResource("5_bf81u")]
 position = Vector2(-1356, 358)
 
@@ -95,6 +88,13 @@ position = Vector2(693, -431)
 
 [node name="Periplaneta2" parent="." instance=ExtResource("3_djkur")]
 position = Vector2(-753, -214)
+
+[node name="Player1" parent="." instance=ExtResource("1_xhtwi")]
+position = Vector2(-2536, 1406)
+
+[node name="Player2" parent="." instance=ExtResource("1_xhtwi")]
+position = Vector2(2783, 1490)
+PlayerID = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
