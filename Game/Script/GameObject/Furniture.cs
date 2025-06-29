@@ -22,6 +22,9 @@ public partial class Furniture : CharacterBody2D
 	[Signal] public delegate void PeriMoveEventHandler(Vector2 periPos, Periplaneta peri);
 
 	private bool IsHoldup;
+
+	public Periplaneta PeriInside { get; private set; }
+
 	Dictionary<PlayerID, bool> canHoldLookups = new() { { PlayerID.Player1, false }, { PlayerID.Player2, false } };
 
 	public static int FurnitureCount;
@@ -100,6 +103,27 @@ public partial class Furniture : CharacterBody2D
 		GlobalPosition = periPos;
 		peri.GlobalPosition = periPos;
 
+	}
+
+	public void OnDamage()
+	{
+		if (PeriInside != null)
+		{
+			PeriInside.OnDamage();
+		}
+	}
+
+	public void UpdatePeriInside(Periplaneta peri)
+	{
+		PeriInside = peri;
+		if (peri == null)
+		{
+			Status = Furniture_Status.FREE;
+		}
+		else
+		{
+			Status = Furniture_Status.POSSESS;
+		}
 	}
 
 	public void UpdateCanHold(PlayerID playerID, bool canHold)

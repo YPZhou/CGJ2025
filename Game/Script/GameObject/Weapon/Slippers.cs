@@ -42,6 +42,10 @@ public partial class Slippers : CharacterBody2D
 					{
 						periplaneta.OnDamage();
 					}
+					if (collision.GetCollider() is Furniture furniture)
+					{
+						furniture.OnDamage();
+					}
 
 					GD.Print(Name, "碰撞", (collision.GetCollider() as Node).Name);
 				}

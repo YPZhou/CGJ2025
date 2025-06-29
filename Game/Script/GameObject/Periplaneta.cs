@@ -27,6 +27,8 @@ public partial class Periplaneta : CharacterBody2D
 	[Signal] public delegate void DamageEventHandler();
 
 	private Sprite2D _sprite;
+	private CollisionShape2D _collisionShape;
+
 
 	public bool _isInFurniture = false;
 	public Player _player1;
@@ -48,6 +50,7 @@ public partial class Periplaneta : CharacterBody2D
 	public override void _Ready()
 	{
 		_sprite = GetNode<Sprite2D>("Sprite2D");
+		_collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
 
 		List<Player> players = FindAllPlayers(GetTree().Root);
 
@@ -172,15 +175,16 @@ public partial class Periplaneta : CharacterBody2D
 				return;
 			}
 
-			if (distToFurniture < stepDistance * 2)
+			if (distToFurniture < stepDistance * 3)
 			{
 				if (_targetFurniture.Status == Furniture_Status.FREE)
 				{
 					_isInFurniture = true;
 					_possessFurniture = _targetFurniture;
-					_possessFurniture.Status = Furniture_Status.POSSESS;
+					_possessFurniture.UpdatePeriInside(this);
 					_periplanetaStates = PeriplanetaStates.Inside;
 					_sprite.Modulate = new Color(1, 1, 1, 0);
+					_collisionShape.Disabled = true;
 					moveDirection = Vector2.Zero;
 				}
 				else
@@ -243,9 +247,14 @@ public partial class Periplaneta : CharacterBody2D
 			PeriplanetaCount -= 1;
 
 			if (_possessFurniture != null)
-				_possessFurniture.Status = Furniture_Status.FREE;
+			{
+				_possessFurniture.UpdatePeriInside(null);
+				_possessFurniture = null;
+			}
+
 			_isInFurniture = false;
 			_sprite.Modulate = new Color(1, 1, 1, 1);
+			_collisionShape.Disabled = false;
 			moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * DangerSpeed; // todo: 从箱子被打出的位移
 
 			SetRotationToDirection(moveDirection);
@@ -276,8 +285,10 @@ public partial class Periplaneta : CharacterBody2D
 			if (currentHit >= MaxHit)
 			{
 				_periplanetaStates = PeriplanetaStates.Outside;
-				_possessFurniture.Status = Furniture_Status.FREE;
+				_possessFurniture.UpdatePeriInside(null);
+				_possessFurniture = null;
 				_sprite.Modulate = new Color(1, 1, 1, 1);
+				_collisionShape.Disabled = false;
 				_isInFurniture = false;
 				moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * DangerSpeed; // todo: 从箱子被打出的位移
 				_remainCD = CD;
