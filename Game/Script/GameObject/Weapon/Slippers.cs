@@ -13,12 +13,16 @@ public partial class Slippers : CharacterBody2D
 	[Export] float FlySpeed = 1000f;
 	[Export] CollisionShape2D collisionShape;
 
+	[Export] AudioStreamPlayer soundPlayer;
+	[Export] AudioStream slippersHitSound;
+
 	public SlippersStatus Status;
 
 	public override void _Ready()
 	{
 		base._Ready();
 
+		soundPlayer.Stream = slippersHitSound;
 		Status = SlippersStatus.FLYING;
 	}
 
@@ -40,10 +44,16 @@ public partial class Slippers : CharacterBody2D
 					var collision = GetSlideCollision(i);
 					if (collision.GetCollider() is Periplaneta periplaneta)
 					{
+						soundPlayer.Play();
 						periplaneta.OnDamage();
 					}
 					if (collision.GetCollider() is Furniture furniture)
 					{
+						if (furniture.PeriInside != null)
+						{
+							soundPlayer.Play();
+						}
+
 						furniture.OnDamage();
 					}
 

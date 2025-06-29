@@ -1,21 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://mnkax4hxm58q"]
+[gd_scene load_steps=5 format=3 uid="uid://mnkax4hxm58q"]
 
 [ext_resource type="Script" uid="uid://cahqtpvbnh1l7" path="res://Script/GameObject/Weapon/Slippers.cs" id="1_x4rru"]
 [ext_resource type="Texture2D" uid="uid://2l6xfuqq7n4p" path="res://Image/Slippers.png" id="2_x4rru"]
+[ext_resource type="AudioStream" uid="uid://dvkrym5wijnf7" path="res://Sound/SlippersHit.mp3" id="2_xdajl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x4rru"]
 radius = 21.0
 height = 95.0
 
-[node name="Slippers" type="CharacterBody2D" node_paths=PackedStringArray("collisionShape")]
+[node name="Slippers" type="CharacterBody2D" node_paths=PackedStringArray("collisionShape", "soundPlayer")]
 scale = Vector2(2, 2)
 collision_layer = 50
 collision_mask = 50
 script = ExtResource("1_x4rru")
 collisionShape = NodePath("CollisionShape2D")
+soundPlayer = NodePath("AudioStreamPlayer")
+slippersHitSound = ExtResource("2_xdajl")
 
 [node name="SlippersSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_x4rru")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_x4rru")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
