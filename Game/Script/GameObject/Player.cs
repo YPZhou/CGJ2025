@@ -292,7 +292,7 @@ public partial class Player : CharacterBody2D
 				else
 				{
 					ProcessMove(keys);
-					_holdupFurniture.Position = Position + new Vector2(0, -100f);
+					_holdupFurniture.Position = Position + new Vector2(0, -200f);
 				}
 
 				break;
