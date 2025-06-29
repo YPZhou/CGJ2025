@@ -84,6 +84,10 @@ public partial class Periplaneta : CharacterBody2D
 	{
 		if (moveDirection != Vector2.Zero)
 		{
+			Velocity = moveDirection;
+			Rotation = Mathf.Lerp(Rotation, _rotation, 0.8f);
+			MoveAndSlide();
+
 			if (_isInFurniture)
 			{
 				Vector2 new_pos = GlobalPosition + (float)delta * moveDirection;
