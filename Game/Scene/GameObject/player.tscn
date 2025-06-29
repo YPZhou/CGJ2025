@@ -19,11 +19,12 @@ radius = 104.307
 [sub_resource type="CircleShape2D" id="CircleShape2D_3kjfs"]
 radius = 150.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("playerHint", "slippersCountHint", "playerSprite", "crosshair", "meleeFlipFlop", "furniturePicking", "meleeAttackRange", "soundPlayer")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("playerHint", "slipper1Rect", "slipper2Rect", "playerSprite", "crosshair", "meleeFlipFlop", "furniturePicking", "meleeAttackRange", "soundPlayer")]
 scale = Vector2(3, 3)
 script = ExtResource("1_006tn")
 playerHint = NodePath("PlayerHint")
-slippersCountHint = NodePath("SlippersCount")
+slipper1Rect = NodePath("Slippers1")
+slipper2Rect = NodePath("Slippers2")
 playerSprite = NodePath("PlayerSprite")
 crosshair = NodePath("CrosshairSprite")
 meleeFlipFlop = NodePath("FlipFlopSprite")
@@ -63,16 +64,21 @@ text = "1P"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SlippersCount" type="Label" parent="."]
-offset_left = 28.0
-offset_top = -120.0
-offset_right = 75.0
-offset_bottom = -65.0
-scale = Vector2(2, 2)
-theme_override_font_sizes/font_size = 40
-text = "1"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Slippers1" type="TextureRect" parent="."]
+offset_left = 59.0
+offset_top = -105.0
+offset_right = 109.0
+offset_bottom = -5.00011
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_gl3sy")
+
+[node name="Slippers2" type="TextureRect" parent="."]
+offset_left = 83.6667
+offset_top = -105.0
+offset_right = 133.667
+offset_bottom = -5.00011
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_gl3sy")
 
 [node name="FurniturePickingArea" type="Area2D" parent="."]
 collision_layer = 2

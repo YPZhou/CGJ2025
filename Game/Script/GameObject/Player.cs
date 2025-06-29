@@ -20,7 +20,8 @@ public partial class Player : CharacterBody2D
 {
 	[Export] PlayerID PlayerID;
 	[Export] Label playerHint;
-	[Export] Label slippersCountHint;
+	[Export] TextureRect slipper1Rect;
+	[Export] TextureRect slipper2Rect;
 	[Export] Sprite2D playerSprite;
 	[Export] Sprite2D crosshair;
 	[Export] Sprite2D meleeFlipFlop;
@@ -79,17 +80,15 @@ public partial class Player : CharacterBody2D
 			playerHint.Text = "1P";
 			playerHint.Modulate = Colors.Green;
 			playerSprite.Texture = player1Texture;
-			slippersCountHint.Modulate = Colors.Green;
 		}
 		else if (PlayerID == PlayerID.Player2)
 		{
 			playerHint.Text = "2P";
 			playerHint.Modulate = Colors.Blue;
 			playerSprite.Texture = player2Texture;
-			slippersCountHint.Modulate = Colors.Blue;
 		}
 
-		slippersCountHint.Text = slippersCount.ToString();
+		UpdateSlippersCount();
 
 		crosshair.Visible = false;
 		crosshairPosition = new Vector2(0, -200f);
@@ -165,7 +164,8 @@ public partial class Player : CharacterBody2D
 	{
 		base._Process(delta);
 
-		slippersCountHint.Text = slippersCount.ToString();
+		UpdateSlippersCount();
+
 		playerHint.Position = new Vector2(playerHintOriginalPosition.X, playerHintOriginalPosition.Y + Mathf.Sin(Time.GetTicksMsec() / 80f) * 10f);
 		if (moveDirection != Vector2.Zero)
 		{
@@ -378,6 +378,27 @@ public partial class Player : CharacterBody2D
 		}
 
 		crosshairPosition = (Vector2.Up * 200f).Rotated(crosshairAngle);
+	}
+
+	void UpdateSlippersCount()
+	{
+		if (slippersCount > 0)
+		{
+			slipper1Rect.Visible = true;
+		}
+		else
+		{
+			slipper1Rect.Visible = false;
+		}
+
+		if (slippersCount > 1)
+		{
+			slipper2Rect.Visible = true;
+		}
+		else
+		{
+			slipper2Rect.Visible = false;
+		}
 	}
 
 	public void Interactive()
