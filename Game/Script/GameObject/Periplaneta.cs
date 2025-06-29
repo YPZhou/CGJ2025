@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using static Godot.TextServer;
 
 namespace CGJ2025;
 
@@ -19,7 +20,7 @@ public partial class Periplaneta : CharacterBody2D
 	[Export] public float CD = 5f;
 	[Export] public float BaseSpeed = 500f;
 	[Export] public float DangerSpeed = 800f;
-	[Export] public float PossessSpeed = 300f;
+	[Export] public float PossessSpeed = 100f;
 	[Export] public int   MaxHealth = 9;
 	[Export] public int   MaxHit = 3;
 
@@ -79,14 +80,28 @@ public partial class Periplaneta : CharacterBody2D
 
 	}
 
-	private void SetRotationToDirection(Vector2 dir)
+	public override void _PhysicsProcess(double delta)
 	{
-		if (dir == Vector2.Zero) return;
-		
-		dir = -dir;
+		if (moveDirection != Vector2.Zero)
+		{
+			if (_isInFurniture)
+			{
+				Vector2 new_pos = GlobalPosition + (float)delta * moveDirection;
+				// _possessFurniture.EmitSignal(Furniture.SignalName.PeriMove, new_pos, this);
+				_possessFurniture.OnPeriMove(new_pos, this);
 
-		_rotation = dir.Angle() - Mathf.Pi / 2f;
+			}
+			else
+			{
+				Velocity = moveDirection;
+
+				Rotation = Mathf.Lerp(Rotation, _rotation, 0.8f);
+
+				MoveAndSlide();
+			}
+		}
 	}
+
 
 	public override void _Process(double delta)
 	{
@@ -143,7 +158,17 @@ public partial class Periplaneta : CharacterBody2D
 			moveDirection = dir * DangerSpeed;
 
 			float distToFurniture = GlobalPosition.DistanceTo(_targetFurniture.GlobalPosition);
-			if (distToFurniture < 5f)
+
+			float stepDistance = (float)delta * moveDirection.Length();
+
+			if (_targetFurniture.Status != Furniture_Status.FREE)
+			{
+				_periplanetaStates = PeriplanetaStates.Outside;
+				_targetFurniture = null;
+				return;
+			}
+
+			if (distToFurniture < stepDistance)
 			{
 				if (_targetFurniture.Status == Furniture_Status.FREE)
 				{
@@ -152,13 +177,12 @@ public partial class Periplaneta : CharacterBody2D
 					_possessFurniture.Status = Furniture_Status.POSSESS;
 					_periplanetaStates = PeriplanetaStates.Inside;
 					_sprite.Modulate = new Color(1, 1, 1, 0);
-
-					return;
+					moveDirection = Vector2.Zero;
 				}
 				else
 				{
-					_periplanetaStates = PeriplanetaStates.ForcedOut;
-					return;
+					_periplanetaStates = PeriplanetaStates.Outside;
+					_targetFurniture = null;
 				}
 			}
 			return;
@@ -204,27 +228,69 @@ public partial class Periplaneta : CharacterBody2D
 		}
 	}
 
-	public override void _PhysicsProcess(double delta)
+
+	public void OnDamage()
 	{
-		if (moveDirection != Vector2.Zero)
+		++currentDamage;
+
+		if (currentDamage >= MaxHealth)
 		{
-			if (_isInFurniture)
-			{
-				Vector2 new_pos = GlobalPosition + (float)delta * moveDirection;
-				// _possessFurniture.EmitSignal(Furniture.SignalName.PeriMove, new_pos, this);
-				_possessFurniture.OnPeriMove(new_pos, this);
+			_periplanetaStates = PeriplanetaStates.Dead;
+			PeriplanetaCount -= 1;
 
-			}
-			else
+			if (_possessFurniture != null)
+				_possessFurniture.Status = Furniture_Status.FREE;
+			_isInFurniture = false;
+			_sprite.Modulate = new Color(1, 1, 1, 1);
+			moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * DangerSpeed; // todo: 从箱子被打出的位移
+
+			SetRotationToDirection(moveDirection);
+			Rotation = Mathf.Lerp(Rotation, _rotation, 0.2f);
+			Velocity = moveDirection;
+
+			MoveAndSlide();
+			moveDirection = Vector2.Zero;
+			Velocity = Vector2.Zero;
+			return;
+		}
+
+		if (_periplanetaStates == PeriplanetaStates.Outside)
+		{
+			_remainCD = 0;
+			_periplanetaStates = PeriplanetaStates.Entering;
+			return;
+		}
+
+		if (_periplanetaStates == PeriplanetaStates.Entering)
+		{
+			return;
+		}
+		if (_periplanetaStates == PeriplanetaStates.Inside)
+		{
+			++currentHit;
+
+			if (currentHit >= MaxHit)
 			{
+				_periplanetaStates = PeriplanetaStates.Outside;
+				_possessFurniture.Status = Furniture_Status.FREE;
+				_sprite.Modulate = new Color(1, 1, 1, 1);
+				_isInFurniture = false;
+				moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * DangerSpeed; // todo: 从箱子被打出的位移
+				_remainCD = CD;
+				currentHit = 0;
+				SetRotationToDirection(moveDirection);
 				Velocity = moveDirection;
-
-				Rotation = _rotation;
+				Rotation = Mathf.Lerp(Rotation, _rotation, 0.2f);
 
 				MoveAndSlide();
+				moveDirection = Vector2.Zero;
+				Velocity = Vector2.Zero;
+
 			}
 		}
 	}
+
+	#region tools
 
 	private Furniture FindFurnitureInScene(Node node)
 	{
@@ -241,6 +307,7 @@ public partial class Periplaneta : CharacterBody2D
 		}
 		return null;
 	}
+
 	private Furniture FindNearestFreeFurniture(Node rootNode)
 	{
 		// 获取当前节点的全局位置作为基准点
@@ -304,57 +371,15 @@ public partial class Periplaneta : CharacterBody2D
 		}
 	}
 
-
-	public void OnDamage()
+	private void SetRotationToDirection(Vector2 dir)
 	{
-		++currentDamage;
+		if (dir == Vector2.Zero) return;
+		
+		dir = -dir;
 
-		if (currentDamage >= MaxHealth)
-		{
-			_periplanetaStates = PeriplanetaStates.Dead;
-			PeriplanetaCount -= 1;
-
-			if (_possessFurniture != null)
-				_possessFurniture.Status = Furniture_Status.FREE;
-			_isInFurniture = false;
-			_sprite.Modulate = new Color(1, 1, 1, 1);
-			moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * DangerSpeed; // todo: 从箱子被打出的位移
-
-			SetRotationToDirection(moveDirection);
-			MoveAndSlide();
-			moveDirection = Vector2.Zero;
-			return;
-		}
-
-		if (_periplanetaStates == PeriplanetaStates.Outside)
-		{
-			_remainCD = 0;
-			_periplanetaStates = PeriplanetaStates.Entering;
-			return;
-		}
-
-		if (_periplanetaStates == PeriplanetaStates.Entering)
-		{
-			return;
-		}
-		if (_periplanetaStates == PeriplanetaStates.Inside)
-		{
-			++currentHit;
-
-			if (currentHit >= MaxHit)
-			{
-				_periplanetaStates = PeriplanetaStates.Outside;
-				_possessFurniture.Status = Furniture_Status.FREE;
-				_sprite.Modulate = new Color(1, 1, 1, 1);
-				_isInFurniture = false;
-				moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * DangerSpeed; // todo: 从箱子被打出的位移
-				_remainCD = CD;
-				currentHit = 0;
-				SetRotationToDirection(moveDirection);
-
-				MoveAndSlide();
-				moveDirection = Vector2.Zero;
-			}
-		}
+		_rotation = dir.Angle() - Mathf.Pi / 2f;
 	}
+
+	#endregion
+
 }
