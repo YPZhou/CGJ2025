@@ -208,20 +208,13 @@ public partial class Periplaneta : CharacterBody2D
 	{
 		if (moveDirection != Vector2.Zero)
 		{
+			Velocity = moveDirection;
+			Rotation = _rotation;
+			MoveAndSlide();
+
 			if (_isInFurniture)
 			{
-				Vector2 new_pos = GlobalPosition + (float)delta * moveDirection;
-				// _possessFurniture.EmitSignal(Furniture.SignalName.PeriMove, new_pos, this);
-				_possessFurniture.OnPeriMove(new_pos, this);
-
-			}
-			else
-			{
-				Velocity = moveDirection;
-
-				Rotation = _rotation;
-
-				MoveAndSlide();
+				_possessFurniture.OnPeriMove(Position, this);
 			}
 		}
 	}
