@@ -15,13 +15,13 @@ public enum PeriplanetaStates
 
 public partial class Periplaneta : CharacterBody2D
 {
-	[Export] public float AlertDistence = 700f;
-	[Export] public float DangerDistence = 300f;
+	[Export] public float AlertDistence = 2000f;
+	[Export] public float DangerDistence = 500f;
 	[Export] public float CD = 5f;
-	[Export] public float BaseSpeed = 500f;
-	[Export] public float DangerSpeed = 800f;
-	[Export] public float PossessSpeed = 100f;
-	[Export] public int   MaxHealth = 9;
+	[Export] public float BaseSpeed = 900f;
+	[Export] public float DangerSpeed = 1800f;
+	[Export] public float PossessSpeed = 500f;
+	[Export] public int   MaxHealth = 15;
 	[Export] public int   MaxHit = 3;
 
 	[Signal] public delegate void DamageEventHandler();
