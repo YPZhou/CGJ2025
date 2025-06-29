@@ -42,6 +42,10 @@ public partial class TitleScene : Node
 			{
 				if (currentSelection == 0)
 				{
+					Furniture.FurnitureCount = 0;
+					Periplaneta.PeriplanetaCount = 0;
+					MainScene.IsGameWin = false;
+
 					GetTree().ChangeSceneToFile("res://Scene/Main.tscn");
 				}
 				else if (currentSelection == 1)

@@ -65,7 +65,7 @@ public partial class ResultScene : Control
 				}
 				else if (currentSelection == 1)
 				{
-					GetTree().Quit();
+					GetTree().ChangeSceneToFile("res://Scene/Title.tscn");
 				}
 			}
 			else if (keyEvent.Keycode == Key.W || keyEvent.Keycode == Key.Up)
