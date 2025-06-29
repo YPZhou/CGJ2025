@@ -100,9 +100,7 @@ public partial class Furniture : CharacterBody2D
 		if (IsHoldup)
 			return;
 
-		GlobalPosition = periPos;
-		peri.GlobalPosition = periPos;
-
+		Position = periPos;
 	}
 
 	public void OnDamage()

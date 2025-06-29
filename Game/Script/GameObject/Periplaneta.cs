@@ -173,7 +173,8 @@ public partial class Periplaneta : CharacterBody2D
 					_possessFurniture.UpdatePeriInside(this);
 					_periplanetaStates = PeriplanetaStates.Inside;
 					_sprite.Modulate = new Color(1, 1, 1, 0);
-					_collisionShape.Disabled = true;
+					CollisionLayer = 4;
+					CollisionMask = 4;
 					moveDirection = Vector2.Zero;
 				}
 				else
@@ -243,7 +244,8 @@ public partial class Periplaneta : CharacterBody2D
 
 			_isInFurniture = false;
 			_sprite.Modulate = new Color(1, 1, 1, 1);
-			_collisionShape.Disabled = false;
+			CollisionLayer = 52;
+			CollisionMask = 52;
 			moveDirection = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1) * DangerSpeed; // todo: 从箱子被打出的位移
 
 			SetRotationToDirection(moveDirection);
