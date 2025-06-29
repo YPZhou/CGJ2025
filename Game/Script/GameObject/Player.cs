@@ -53,7 +53,7 @@ public partial class Player : CharacterBody2D
 
 	float aimingStartTime;
 	float AimingTime => Time.GetTicksMsec() - aimingStartTime;
-	float aimingThreshold = 100f;
+	float aimingThreshold = 300f;
 
 	float meleeAttackStartTime;
 	float MeleeAttackTime => Time.GetTicksMsec() - meleeAttackStartTime;
